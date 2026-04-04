@@ -1,494 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brazil Port Data</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --ocean: #0c4a6e; --teal: #0891b2; --bg: #e8eaed; }
-  body { font-family: 'Roboto', sans-serif; background: var(--bg); color: #1a1a2e; overflow-x: hidden; }
-  .wrap { max-width: 1260px; margin: 0 auto; padding: 0 24px; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brazil's Top 20 Ports & Terminals - Cargo Movement Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15/prop-types.min.js"></script>
+    <script src="https://unpkg.com/recharts@2.12.7/umd/Recharts.js"></script>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; background: #ffffff; color: #111827; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
 
-  /* ═══ HEADER ═══ */
-  header {
-    position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.92); backdrop-filter: blur(14px);
-    border-bottom: 1px solid #e0e0e0; padding: 14px 0;
-  }
-  .hdr { display: flex; align-items: center; gap: 14px; }
-  .logo {
-    width: 44px; height: 44px;
-    background: linear-gradient(135deg, #0c4a6e, #0891b2);
-    border-radius: 10px; display: flex; align-items: center; justify-content: center;
-    font-size: 20px; color: white; font-weight: 800; font-family: 'Sora';
-  }
-  .hdr-title { font-family: 'Sora'; font-size: 1.15rem; font-weight: 700; color: var(--ocean); }
-  .hdr-sub { font-size: 0.68rem; color: #94a3b8; letter-spacing: 1px; }
-  .hdr-nav { margin-left: auto; display: flex; gap: 4px; }
-  .hdr-nav a {
-    font-size: 0.76rem; font-weight: 500; color: #64748b;
-    text-decoration: none; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
-  }
-  .hdr-nav a:hover { background: #f1f5f9; color: var(--ocean); }
+        .hero-bg { background: linear-gradient(135deg, #0a0f1a 0%, #0f172a 40%, #0c4a3e 100%); }
+        .glass-card { background: rgba(255,255,255,0.07); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; }
+        .section-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; }
+        .kpi-card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 20px; transition: box-shadow 0.2s; }
+        .kpi-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .kpi-value { font-size: 1.75rem; font-weight: 800; color: #059669; line-height: 1.2; font-variant-numeric: tabular-nums; }
+        .kpi-label { font-size: 0.8rem; color: #6b7280; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  /* ═══ HERO ═══ */
-  .hero { padding: 48px 0 16px; }
-  .hero h1 {
-    font-family: 'Sora'; font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800; color: var(--ocean); line-height: 1.12; margin-bottom: 10px;
-  }
-  .hero p { font-size: 1rem; color: #64748b; max-width: 640px; line-height: 1.6; }
+        .nav-sticky { position: sticky; top: 0; z-index: 40; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid #e5e7eb; }
+        .nav-link { padding: 12px 20px; font-size: 0.875rem; font-weight: 600; color: #6b7280; cursor: pointer; border: none; background: none; transition: color 0.2s; }
+        .nav-link:hover { color: #059669; }
 
-  /* ═══ SECTION LABEL ═══ */
-  .slbl {
-    font-family: 'Sora'; font-size: 0.7rem; text-transform: uppercase;
-    letter-spacing: 3px; color: #94a3b8; margin-bottom: 20px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .slbl::after { content: ''; flex: 1; height: 1px; background: #d0d5dd; }
+        .filter-btn { padding: 8px 16px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: 1px solid #e5e7eb; background: #fff; color: #374151; }
+        .filter-btn:hover { border-color: #059669; color: #059669; }
+        .filter-btn.active { background: #059669; color: #fff; border-color: #059669; }
 
-  /* ═══ CONTAINER YARD - BENTO GRID ═══ */
-  .yard { padding-bottom: 48px; }
-  .bento {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(40px, auto);
-    gap: 14px;
-  }
 
-  /* Irregular placement */
-  .sc:nth-child(1) { grid-column: 1 / 8;   grid-row: 1 / 6; }    /* SDG - wide left */
-  .sc:nth-child(2) { grid-column: 8 / 13;  grid-row: 1 / 8; }    /* Top20 - tall right */
-  .sc:nth-child(3) { grid-column: 1 / 5;   grid-row: 6 / 13; }   /* Cargo - narrow left */
-  .sc:nth-child(4) { grid-column: 5 / 8;   grid-row: 6 / 11; }   /* Resources - small center */
-  .sc:nth-child(5) { grid-column: 5 / 9;   grid-row: 11 / 16; }  /* CO2 Calculator - standalone */
-  .sc:nth-child(6) { grid-column: 9 / 13;  grid-row: 8 / 16; }   /* Tools - right bottom */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 50; display: flex; align-items: flex-start; justify-content: center; overflow-y: auto; padding: 40px 16px; }
+        .modal-content { background: #fff; border-radius: 16px; max-width: 900px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
 
-  /* Container shift offsets for irregularity */
-  .sc:nth-child(1) { transform: rotate(-0.4deg); }
-  .sc:nth-child(2) { transform: rotate(0.3deg) translateY(6px); }
-  .sc:nth-child(3) { transform: rotate(0.5deg) translateX(3px); }
-  .sc:nth-child(4) { transform: rotate(-0.6deg) translateY(-4px); }
-  .sc:nth-child(5) { transform: rotate(0.25deg) translateX(-5px); }
-  .sc:nth-child(6) { transform: rotate(-0.35deg) translateY(3px); }
+        .progress-bar { height: 6px; border-radius: 3px; background: #e5e7eb; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 3px; background: #059669; transition: width 0.6s ease; }
 
-  /* ═══ 3D CONTAINER ═══ */
-  .sc {
-    position: relative;
-    transition: transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease;
-    animation: fadeIn 0.6s ease forwards;
-    opacity: 0;
-  }
-  .sc:hover { transform: rotate(0deg) translateY(-3px) scale(1.008) !important; z-index: 10; }
+        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-public { background: #d1fae5; color: #065f46; }
+        .badge-terminal { background: #fef3c7; color: #92400e; }
 
-  .cb {
-    position: relative; border-radius: 5px; overflow: hidden; height: 100%;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 3px 10px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.12);
-  }
-  /* corrugation */
-  .cb::before {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 46px, rgba(0,0,0,0.05) 46px, rgba(0,0,0,0.05) 48px);
-    pointer-events: none; z-index: 1;
-  }
-  /* light reflection */
-  .cb::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 100%);
-    pointer-events: none; z-index: 2;
-  }
 
-  /* corner fittings */
-  .cf { position: absolute; width: 14px; height: 14px; border: 2.5px solid rgba(255,255,255,0.20); border-radius: 2px; z-index: 3; }
-  .cf.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
-  .cf.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
-  .cf.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
-  .cf.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
-  .idp {
-    position: absolute; top: 10px; right: 14px;
-    font-family: 'DM Mono'; font-size: 0.58rem; font-weight: 500;
-    letter-spacing: 2px; color: rgba(255,255,255,0.25); z-index: 3;
-  }
-  .rkb {
-    position: absolute; bottom: 8px; right: 14px;
-    font-family: 'Sora'; font-size: 2.2rem; font-weight: 800;
-    color: rgba(255,255,255,0.05); z-index: 3;
-  }
+        .stat-counter { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1; color: #34d399; }
 
-  /* inner content */
-  .ci { position: relative; z-index: 3; padding: 28px 26px; color: white; height: 100%; display: flex; flex-direction: column; }
-  .ci h3 { font-family: 'Sora'; font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
-  .ci .sub { font-size: 0.72rem; opacity: 0.6; margin-bottom: 8px; }
-  .ci .desc { font-size: 0.82rem; opacity: 0.8; line-height: 1.5; margin-bottom: 16px; }
-
-  /* data chips */
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-  .chip {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.13);
-    border-radius: 7px; padding: 8px 12px; min-width: 90px;
-  }
-  .chip-lbl { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; }
-  .chip-val { font-family: 'DM Mono'; font-size: 0.92rem; font-weight: 500; margin-top: 2px; }
-  .chip-sub { font-size: 0.58rem; opacity: 0.45; margin-top: 1px; }
-
-  /* mini table */
-  .mtbl { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-  .mtbl th {
-    text-align: left; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px;
-    opacity: 0.45; padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.12);
-  }
-  .mtbl th:last-child, .mtbl td:last-child { text-align: right; }
-  .mtbl td {
-    font-size: 0.76rem; padding: 5px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .mtbl td:last-child { font-family: 'DM Mono'; font-size: 0.72rem; }
-
-  /* mini bars */
-  .mbars { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-  .mbar { display: flex; align-items: center; gap: 8px; }
-  .mbar-lbl { font-size: 0.7rem; width: 85px; flex-shrink: 0; opacity: 0.8; }
-  .mbar-track { flex: 1; height: 16px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
-  .mbar-fill { height: 100%; border-radius: 4px; background: rgba(255,255,255,0.32); display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; }
-  .mbar-val { font-family: 'DM Mono'; font-size: 0.58rem; white-space: nowrap; }
-
-  /* CTA */
-  .cta {
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 18px; background: rgba(255,255,255,0.13);
-    border: 1.5px solid rgba(255,255,255,0.22); border-radius: 8px;
-    color: white; text-decoration: none; font-weight: 600; font-size: 0.8rem;
-    transition: all 0.25s;
-  }
-  .cta:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
-
-  /* ═══ CONTACT CTA ═══ */
-  .contact-cta {
-    background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 100%);
-    padding: 52px 0; text-align: center;
-  }
-  .contact-cta h2 {
-    font-family: 'Sora'; font-size: clamp(1.3rem, 3vw, 1.8rem);
-    font-weight: 700; color: white; margin-bottom: 10px;
-  }
-  .contact-cta p {
-    color: rgba(255,255,255,0.6); font-size: 0.95rem;
-    max-width: 520px; margin: 0 auto 24px; line-height: 1.6;
-  }
-  .contact-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .contact-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 26px; border-radius: 10px; font-weight: 600;
-    font-size: 0.88rem; text-decoration: none; transition: all 0.25s;
-  }
-  .contact-btn.primary { background: white; color: var(--ocean); }
-  .contact-btn.primary:hover { background: #f0f9ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-  .contact-btn.secondary {
-    background: rgba(255,255,255,0.12); color: white;
-    border: 1.5px solid rgba(255,255,255,0.25);
-  }
-  .contact-btn.secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-  .contact-icon { width: 20px; height: 20px; display: inline-block; }
-
-  /* ═══ ABOUT ═══ */
-  .about { padding: 56px 0; border-top: 1px solid #e0e0e0; }
-  .about h2 { font-family: 'Sora'; font-size: 1.6rem; font-weight: 700; color: var(--ocean); margin-bottom: 12px; }
-  .about p { color: #64748b; line-height: 1.7; max-width: 720px; margin-bottom: 12px; }
-  .about a { color: var(--teal); text-decoration: none; font-weight: 500; }
-  .about a:hover { text-decoration: underline; }
-
-  /* ═══ FOOTER ═══ */
-  footer { background: var(--ocean); color: rgba(255,255,255,0.5); text-align: center; padding: 28px; font-size: 0.82rem; }
-  footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
-  footer a:hover { color: white; }
-
-  /* ═══ GROUND MARKINGS (yard lines) ═══ */
-  .yard-ground {
-    position: relative;
-  }
-  .yard-ground::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    width: 3px; height: 100%;
-    background: repeating-linear-gradient(180deg, #d0d5dd 0px, #d0d5dd 12px, transparent 12px, transparent 24px);
-    opacity: 0.5;
-    z-index: 0;
-  }
-
-  /* ═══ ANIMATIONS ═══ */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; }
-  }
-  .sc:nth-child(1) { animation-delay: 0.05s; }
-  .sc:nth-child(2) { animation-delay: 0.12s; }
-  .sc:nth-child(3) { animation-delay: 0.20s; }
-  .sc:nth-child(4) { animation-delay: 0.28s; }
-  .sc:nth-child(5) { animation-delay: 0.36s; }
-  .sc:nth-child(6) { animation-delay: 0.44s; }
-
-  /* ═══ RESPONSIVE ═══ */
-  @media (max-width: 900px) {
-    .bento {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto;
-    }
-    .sc:nth-child(1), .sc:nth-child(2), .sc:nth-child(3),
-    .sc:nth-child(4), .sc:nth-child(5), .sc:nth-child(6) {
-      grid-column: 1 / -1 !important;
-      grid-row: auto !important;
-      transform: none !important;
-    }
-    .sc:hover { transform: translateY(-3px) !important; }
-    .ci { padding: 22px 18px; }
-    .chips { gap: 5px; }
-    .chip { min-width: 80px; padding: 7px 10px; }
-    .hdr-nav { display: none; }
-    .mbar-lbl { width: 65px; font-size: 0.64rem; }
-    .contact-btns { flex-direction: column; align-items: center; }
-    .yard-ground::before { display: none; }
-  }
-</style>
+        @media (max-width: 768px) {
+            .hero-stats { grid-template-columns: repeat(2, 1fr) !important; }
+            .kpi-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+    </style>
 </head>
 <body>
+    <div id="root"></div>
 
-<header>
-  <div class="wrap hdr">
-    <div class="logo">B</div>
-    <div>
-      <div class="hdr-title">Brazil Port Data</div>
-      <div class="hdr-sub">RESEARCH &middot; ANALYTICS &middot; SUSTAINABILITY</div>
-    </div>
-    <nav class="hdr-nav">
-      <a href="#yard">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</header>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useCallback } = React;
+        const {
+            LineChart, Line, BarChart, Bar, XAxis, YAxis,
+            CartesianGrid, Tooltip, Legend, ResponsiveContainer
+        } = Recharts;
 
-<section class="wrap hero">
-  <h1>Brazilian Port Sector<br>Data &amp; Research Hub</h1>
-  <p>Structured data, analytics, and sustainability insights on Brazilian ports. A research platform connecting international stakeholders to reliable port sector intelligence.</p>
-</section>
+        // ========== DATA ==========
+        const PORTS = [
+            { id: "ponta-madeira", name: "Ponta da Madeira Marine Terminal", state: "Maranhao", sc: "MA", region: "Northeast", city: "Sao Luis", color: "#0f766e", type: "Terminal Autorizado", rank: 1,
+                data: [{ y: 2021, t: 182361835, b: 714 }, { y: 2022, t: 167995183, b: 634 }, { y: 2023, t: 166334878, b: 626 }, { y: 2024, t: 175777453, b: 661 }, { y: 2025, t: 172389190, b: 638 }],
+                cargoes: [["Iron Ore", 91.2], ["Iron Ore Pellets", 4.8], ["Manganese Ore", 2.1], ["Pig Iron", 1.2], ["Copper Concentrate", 0.7]] },
+            { id: "santos", name: "Port of Santos", state: "Sao Paulo", sc: "SP", region: "Southeast", city: "Santos", color: "#059669", type: "Porto Organizado", rank: 2,
+                data: [{ y: 2021, t: 113279537, b: 4171 }, { y: 2022, t: 126216637, b: 4572 }, { y: 2023, t: 135901717, b: 4552 }, { y: 2024, t: 138692349, b: 4588 }, { y: 2025, t: 142819073, b: 4762 }],
+                cargoes: [["Sugar", 22.5], ["Soybeans", 18.3], ["Containers", 17.8], ["Fertilisers", 12.4], ["Corn", 9.6]] },
+            { id: "tubarao", name: "Tubarao Terminal", state: "Espirito Santo", sc: "ES", region: "Southeast", city: "Vitoria", color: "#1d4ed8", type: "Terminal Autorizado", rank: 3,
+                data: [{ y: 2021, t: 64100000, b: 592 }, { y: 2022, t: 68000000, b: 620 }, { y: 2023, t: 76000000, b: 648 }, { y: 2024, t: 77420000, b: 660 }, { y: 2025, t: 87400000, b: 710 }],
+                cargoes: [["Iron Ore", 72.4], ["Iron Ore Pellets", 18.6], ["Coal (import)", 5.2], ["Soy Products", 2.1], ["Pig Iron", 1.7]] },
+            { id: "angra", name: "Angra dos Reis Waterway Terminal", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Angra dos Reis", color: "#7c3aed", type: "Terminal Autorizado", rank: 4,
+                data: [{ y: 2021, t: 64100000, b: 420 }, { y: 2022, t: 59800000, b: 395 }, { y: 2023, t: 63700000, b: 410 }, { y: 2024, t: 62720000, b: 405 }, { y: 2025, t: 70400000, b: 440 }],
+                cargoes: [["Crude Oil", 68.3], ["Petroleum Products", 21.5], ["LPG", 5.8], ["Bunker Fuel", 2.9], ["Lubricants", 1.5]] },
+            { id: "itaguai", name: "Port of Itaguai", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Itaguai", color: "#0284c7", type: "Porto Organizado", rank: 5,
+                data: [{ y: 2021, t: 51723244, b: 661 }, { y: 2022, t: 50619463, b: 522 }, { y: 2023, t: 55778923, b: 526 }, { y: 2024, t: 60678241, b: 630 }, { y: 2024, t: 62835315, b: 643 }],
+                cargoes: [["Iron Ore", 52.8], ["Coal (import)", 22.4], ["Containers", 11.6], ["Pig Iron", 7.3], ["Alumina", 5.9]] },
+            { id: "paranagua", name: "Port of Paranagua", state: "Parana", sc: "PR", region: "South", city: "Paranagua", color: "#d97706", type: "Porto Organizado", rank: 6,
+                data: [{ y: 2021, t: 51606028, b: 2040 }, { y: 2022, t: 52015004, b: 2011 }, { y: 2023, t: 58318875, b: 2173 }, { y: 2024, t: 59280249, b: 2310 }, { y: 2025, t: 66408475, b: 2395 }],
+                cargoes: [["Soybeans & Soy Meal", 28.7], ["Containers", 19.2], ["Sugar", 16.4], ["Fertilisers", 14.8], ["Corn", 10.3]] },
+            { id: "sao-sebastiao", name: "Sao Sebastiao Waterway Terminal", state: "Sao Paulo", sc: "SP", region: "Southeast", city: "Sao Sebastiao", color: "#be185d", type: "Terminal Autorizado", rank: 7,
+                data: [{ y: 2021, t: 54500000, b: 480 }, { y: 2022, t: 58900000, b: 510 }, { y: 2023, t: 57500000, b: 495 }, { y: 2024, t: 53310000, b: 460 }, { y: 2025, t: 54100000, b: 465 }],
+                cargoes: [["Crude Oil", 74.2], ["Petroleum Products", 18.6], ["LPG", 3.8], ["Ethanol", 2.1], ["Bunker Fuel", 1.3]] },
+            { id: "acu-petroleo", name: "Acu Oil Terminal", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Sao Joao da Barra", color: "#92400e", type: "Terminal Autorizado", rank: 8,
+                data: [{ y: 2021, t: 32600000, b: 310 }, { y: 2022, t: 43400000, b: 380 }, { y: 2023, t: 57400000, b: 490 }, { y: 2024, t: 50240000, b: 440 }, { y: 2025, t: 60400000, b: 510 }],
+                cargoes: [["Crude Oil", 82.4], ["Petroleum Products", 10.8], ["LPG", 3.2], ["Natural Gas Liquids", 2.4], ["Bunker Fuel", 1.2]] },
+            { id: "itaqui", name: "Port of Itaqui", state: "Maranhao", sc: "MA", region: "Northeast", city: "Sao Luis", color: "#6d28d9", type: "Porto Organizado", rank: 9,
+                data: [{ y: 2021, t: 31025619, b: 967 }, { y: 2022, t: 33569710, b: 978 }, { y: 2023, t: 36329965, b: 1026 }, { y: 2024, t: 33884494, b: 968 }, { y: 2025, t: 36771880, b: 979 }],
+                cargoes: [["Soybeans & Soy Meal", 34.2], ["Iron Ore", 18.6], ["Coal (import)", 15.3], ["Corn", 14.8], ["Fertilisers", 9.4]] },
+            { id: "ilha-guaiba", name: "Ilha Guaiba Terminal", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Mangaratiba", color: "#065f46", type: "Terminal Autorizado", rank: 10,
+                data: [{ y: 2021, t: 26300000, b: 220 }, { y: 2022, t: 27700000, b: 235 }, { y: 2023, t: 29500000, b: 248 }, { y: 2024, t: 32130000, b: 265 }, { y: 2025, t: 31500000, b: 258 }],
+                cargoes: [["Iron Ore", 94.6], ["Iron Ore Pellets", 3.2], ["Manganese Ore", 1.1], ["Bauxite", 0.7], ["Coal (import)", 0.4]] },
+            { id: "riogrande", name: "Port of Rio Grande", state: "Rio Grande do Sul", sc: "RS", region: "South", city: "Rio Grande", color: "#dc2626", type: "Porto Organizado", rank: 11,
+                data: [{ y: 2021, t: 28191092, b: 2434 }, { y: 2022, t: 24175428, b: 2261 }, { y: 2023, t: 25888360, b: 2234 }, { y: 2024, t: 29318642, b: 2343 }, { y: 2025, t: 31634709, b: 2510 }],
+                cargoes: [["Soybeans & Soy Meal", 26.4], ["Containers", 22.8], ["Fertilisers", 16.2], ["Rice", 8.7], ["Wood & Cellulose", 7.3]] },
+            { id: "acu-minerio", name: "Acu Iron Ore Terminal", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Sao Joao da Barra", color: "#78350f", type: "Terminal Autorizado", rank: 12,
+                data: [{ y: 2021, t: 23100000, b: 195 }, { y: 2022, t: 21400000, b: 180 }, { y: 2023, t: 24000000, b: 200 }, { y: 2024, t: 25010000, b: 210 }, { y: 2025, t: 24200000, b: 204 }],
+                cargoes: [["Iron Ore", 96.8], ["Iron Ore Pellets", 1.8], ["Manganese Ore", 0.7], ["Bauxite", 0.4], ["Other Minerals", 0.3]] },
+            { id: "suape", name: "Port of Suape", state: "Pernambuco", sc: "PE", region: "Northeast", city: "Ipojuca", color: "#b45309", type: "Porto Organizado", rank: 13,
+                data: [{ y: 2021, t: 22100000, b: 1520 }, { y: 2022, t: 24700000, b: 1580 }, { y: 2023, t: 24000000, b: 1600 }, { y: 2024, t: 24840000, b: 1628 }, { y: 2025, t: 24300000, b: 1610 }],
+                cargoes: [["Containers", 28.4], ["Petroleum Products", 24.6], ["Wheat", 13.2], ["Corn", 11.7], ["Sugar", 8.3]] },
+            { id: "porto-sudeste", name: "Porto Sudeste Terminal", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Itaguai", color: "#4338ca", type: "Terminal Autorizado", rank: 14,
+                data: [{ y: 2021, t: 17900000, b: 165 }, { y: 2022, t: 18500000, b: 170 }, { y: 2023, t: 27400000, b: 245 }, { y: 2024, t: 24720000, b: 220 }, { y: 2025, t: 30600000, b: 270 }],
+                cargoes: [["Iron Ore", 97.2], ["Iron Ore Pellets", 1.4], ["Manganese Ore", 0.8], ["Bauxite", 0.4], ["Other Minerals", 0.2]] },
+            { id: "madre-de-deus", name: "Madre de Deus Waterway Terminal", state: "Bahia", sc: "BA", region: "Northeast", city: "Madre de Deus", color: "#0e7490", type: "Terminal Autorizado", rank: 15,
+                data: [{ y: 2021, t: 16600000, b: 310 }, { y: 2022, t: 19900000, b: 360 }, { y: 2023, t: 20900000, b: 375 }, { y: 2024, t: 20810000, b: 370 }, { y: 2025, t: 20200000, b: 360 }],
+                cargoes: [["Petroleum Products", 52.4], ["Crude Oil", 34.8], ["LPG", 6.3], ["Ethanol", 3.8], ["Chemicals", 2.7]] },
+            { id: "vila-do-conde", name: "Port of Vila do Conde", state: "Para", sc: "PA", region: "North", city: "Barcarena", color: "#15803d", type: "Porto Organizado", rank: 16,
+                data: [{ y: 2021, t: 16400000, b: 1520 }, { y: 2022, t: 17900000, b: 1600 }, { y: 2023, t: 16800000, b: 1560 }, { y: 2024, t: 20160000, b: 1643 }, { y: 2025, t: 21300000, b: 1700 }],
+                cargoes: [["Alumina", 32.4], ["Bauxite", 24.8], ["Kaolin", 14.2], ["Wood & Cellulose", 12.6], ["Petroleum Products", 8.3]] },
+            { id: "pecem", name: "Pecem Port Terminal", state: "Ceara", sc: "CE", region: "Northeast", city: "Sao Goncalo do Amarante", color: "#c2410c", type: "Terminal Autorizado", rank: 17,
+                data: [{ y: 2021, t: 22400000, b: 820 }, { y: 2022, t: 16900000, b: 720 }, { y: 2023, t: 17100000, b: 730 }, { y: 2024, t: 19040000, b: 780 }, { y: 2025, t: 20500000, b: 810 }],
+                cargoes: [["Iron Ore", 28.6], ["Containers", 22.4], ["Steel Products", 16.8], ["Petroleum Products", 14.2], ["Fruits", 8.4]] },
+            { id: "sao-francisco-sul", name: "Port of Sao Francisco do Sul", state: "Santa Catarina", sc: "SC", region: "South", city: "Sao Francisco do Sul", color: "#1e40af", type: "Porto Organizado", rank: 18,
+                data: [{ y: 2021, t: 13400000, b: 420 }, { y: 2022, t: 12700000, b: 400 }, { y: 2023, t: 16800000, b: 460 }, { y: 2024, t: 16960000, b: 472 }, { y: 2025, t: 17500000, b: 490 }],
+                cargoes: [["Soybeans & Soy Oil", 34.6], ["Corn", 18.3], ["Containers", 14.2], ["Petroleum Products", 12.8], ["Fertilisers", 9.6]] },
+            { id: "santarem", name: "Port of Santarem", state: "Para", sc: "PA", region: "North", city: "Santarem", color: "#166534", type: "Porto Organizado", rank: 19,
+                data: [{ y: 2021, t: 10500000, b: 3200 }, { y: 2022, t: 13200000, b: 3500 }, { y: 2023, t: 15900000, b: 3750 }, { y: 2024, t: 16380000, b: 3804 }, { y: 2025, t: 18500000, b: 4000 }],
+                cargoes: [["Soybeans", 52.4], ["Corn", 28.6], ["Soy Meal", 8.3], ["Fertilisers", 6.2], ["General Cargo", 4.5]] },
+            { id: "ilha-dagua", name: "Ilha D'Agua Waterway Terminal", state: "Rio de Janeiro", sc: "RJ", region: "Southeast", city: "Rio de Janeiro", color: "#9f1239", type: "Terminal Autorizado", rank: 20,
+                data: [{ y: 2021, t: 21800000, b: 380 }, { y: 2022, t: 17200000, b: 310 }, { y: 2023, t: 16500000, b: 295 }, { y: 2024, t: 15790000, b: 282 }, { y: 2025, t: 15900000, b: 285 }],
+                cargoes: [["Petroleum Products", 48.6], ["Crude Oil", 38.2], ["LPG", 6.8], ["Bunker Fuel", 4.2], ["Chemicals", 2.2]] },
+        ];
 
-<section class="wrap yard" id="yard">
-  <div class="slbl">Container Yard &middot; Select a Project</div>
-  <div class="bento yard-ground">
+        // ========== HELPERS ==========
+        function fmt(num) {
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(1) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(0) + 'K';
+            return num.toString();
+        }
+        function fmtFull(num) { return num.toLocaleString('en-US'); }
+        function fmtTonnes(num) { return (num / 1e6).toFixed(2) + ' M tonnes'; }
+        function pctChange(a, b) { return (((b - a) / a) * 100).toFixed(1); }
 
-    <!-- ═══ CONTAINER 01: SDG PORT HUB (wide left) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #0e7490 0%, #0c4a6e 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">01</div>
-        <div class="idp">SDGP-001</div>
-        <div class="ci">
-          <h3>SDG Port Hub</h3>
-          <div class="sub">Sustainable Development Goals &middot; Port Assessment Tool</div>
-          <div class="desc">Interactive platform for evaluating and simulating SDG performance across ports worldwide. Attribute-based assessment, benchmarking, and sustainability metrics aligned with the UN 2030 Agenda.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Focus</div>
-              <div class="chip-val">17 SDGs</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Tool</div>
-              <div class="chip-val">Simulation</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Scope</div>
-              <div class="chip-val">Global</div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://www.sdgporthub.com" target="_blank" class="cta">Visit SDG Port Hub &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+        const totalCargo2025 = PORTS.reduce((s, p) => s + p.data[4].t, 0);
+        const totalBerthings2025 = PORTS.reduce((s, p) => s + p.data[4].b, 0);
+        const publicCount = PORTS.filter(p => p.type === "Porto Organizado").length;
+        const uniqueStates = [...new Set(PORTS.map(p => p.sc))].length;
 
-    <!-- ═══ CONTAINER 02: TOP 20 PORTS (tall right) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #dc2626 0%, #991b1b 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">02</div>
-        <div class="idp">TOP20-002</div>
-        <div class="ci">
-          <h3>Top 20 Ports &amp; Terminals</h3>
-          <div class="sub">Cargo Dashboard &middot; 2021-2025 &middot; ANTAQ</div>
-          <div class="desc">Individual profiles for Brazil's 20 largest ports ranked by cargo volume.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Combined 2025</div>
-              <div class="chip-val">908.5M t</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">#1 Volume</div>
-              <div class="chip-val">Ponta da Madeira</div>
-            </div>
-          </div>
-          <table class="mtbl">
-            <thead><tr><th>#</th><th>Facility</th><th>2025</th></tr></thead>
-            <tbody>
-              <tr><td>1</td><td>Ponta da Madeira</td><td>172.4M t</td></tr>
-              <tr><td>2</td><td>Port of Santos</td><td>142.8M t</td></tr>
-              <tr><td>3</td><td>Tubarao Terminal</td><td>87.4M t</td></tr>
-              <tr><td>4</td><td>Angra dos Reis</td><td>70.4M t</td></tr>
-              <tr><td>5</td><td>Paranagua</td><td>66.4M t</td></tr>
-            </tbody>
-          </table>
-          <div class="cta-row">
-            <a href="https://brazilport20.vercel.app/" target="_blank" class="cta">Open Dashboard &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+        // ========== ANIMATED COUNTER ==========
+        function AnimatedCounter({ target, suffix }) {
+            const [val, setVal] = useState(0);
+            const ref = useRef(null);
+            const ran = useRef(false);
+            useEffect(() => {
+                const obs = new IntersectionObserver(([e]) => {
+                    if (e.isIntersecting && !ran.current) {
+                        ran.current = true;
+                        const dur = 1800, t0 = performance.now();
+                        function tick(now) {
+                            const p = Math.min((now - t0) / dur, 1);
+                            setVal(Math.round((1 - Math.pow(1 - p, 3)) * target));
+                            if (p < 1) requestAnimationFrame(tick);
+                        }
+                        requestAnimationFrame(tick);
+                    }
+                }, { threshold: 0.2 });
+                if (ref.current) obs.observe(ref.current);
+                return () => obs.disconnect();
+            }, [target]);
+            return <span ref={ref} className="stat-counter">{fmtFull(val)}{suffix && <span style={{fontSize:'0.6em',opacity:0.7,marginLeft:4}}>{suffix}</span>}</span>;
+        }
 
-    <!-- ═══ CONTAINER 03: CARGO MOVEMENT (narrow left) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #1d4ed8 0%, #0c2340 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">03</div>
-        <div class="idp">MOVP-003</div>
-        <div class="ci">
-          <h3>Cargo Movement</h3>
-          <div class="sub">ANTAQ 2010-2024 &middot; All Ports</div>
-          <div class="desc">15 years of Brazilian port cargo data. Filters by year, facility, cargo profile, direction, navigation, and state.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Total 2024</div>
-              <div class="chip-val">1.21B t</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">vs 2023</div>
-              <div class="chip-val" style="color: #fca5a5">-7.2%</div>
-            </div>
-          </div>
-          <div class="mbars">
-            <div class="mbar">
-              <div class="mbar-lbl">Dry Bulk</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 60%"><span class="mbar-val">727M t</span></div></div>
-            </div>
-            <div class="mbar">
-              <div class="mbar-lbl">Liquid</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 24%"><span class="mbar-val">287M t</span></div></div>
-            </div>
-            <div class="mbar">
-              <div class="mbar-lbl">Container</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 11%"><span class="mbar-val">138M t</span></div></div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://portflow-site.vercel.app/" target="_blank" class="cta">Open Dashboard &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+        // ========== HERO ==========
+        function HeroSection({ onNavigate }) {
+            return (
+                <section className="hero-bg" style={{minHeight:'100vh',display:'flex',flexDirection:'column',justifyContent:'center',padding:'60px 20px 40px'}}>
+                    <div style={{maxWidth:1200,margin:'0 auto',width:'100%',textAlign:'center'}}>
+                        <p style={{color:'#34d399',fontSize:'0.85rem',fontWeight:600,letterSpacing:2,textTransform:'uppercase',marginBottom:16}}>Cargo Movement Analytics</p>
+                        <h1 style={{color:'#fff',fontSize:'clamp(2.2rem, 5vw, 4rem)',fontWeight:800,lineHeight:1.1,marginBottom:16}}>
+                            Brazil's Top 20<br/>Ports & Terminals
+                        </h1>
+                        <p style={{color:'rgba(255,255,255,0.5)',fontSize:'1.1rem',marginBottom:48}}>2021 - 2025 Dashboard</p>
 
-    <!-- ═══ CONTAINER 04: RESOURCES (small center) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #d97706 0%, #92400e 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">04</div>
-        <div class="idp">RSRC-004</div>
-        <div class="ci">
-          <h3>ANTAQ Resources</h3>
-          <div class="sub">Official Data Portals</div>
-          <div class="desc">Direct access to official Brazilian port authority dashboards and data.</div>
-          <div class="cta-row">
-            <a href="https://aquarela.antaq.gov.br/single/?appid=5944b812-2cbd-4680-a7b6-004d0ce476dc&sheet=05d6dc11-6d7d-4bda-8142-fbd3a0ee3904&theme=classic&opt=currsel%2Cctxmenu" target="_blank" class="cta">ANTAQ Portal &rarr;</a>
-            <a href="https://aquarela.antaq.gov.br/single/?appid=775bf8ab-83e5-4049-9178-a0b0a94ad88b&sheet=ThLpNXe&opt=currsel%2Cctxmenu" target="_blank" class="cta">ANTAQ IDA &rarr;</a>
-            <a href="https://aquarela.antaq.gov.br/single/?appid=7367309e-6dd4-4b72-bd0c-3998768f72bf&sheet=517b258c-f119-4b2d-80a8-7b536ddbeed2&bookmark=c8125ac7-d193-4683-80aa-fa2f3a2e9712&opt=currsel%2Cctxmenu&select=clearall" target="_blank" class="cta">Public Ports &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+                        <div className="hero-stats" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:20,marginBottom:48}}>
+                            {[
+                                { target: Math.round(totalCargo2025/1e6), suffix: ' Mt', label: 'Total Cargo 2025' },
+                                { target: totalBerthings2025, suffix: '', label: 'Total Berthings 2025' },
+                                { target: 20, suffix: '', label: 'Tracked Facilities' },
+                                { target: uniqueStates, suffix: '', label: 'Brazilian States' },
+                            ].map((item, i) => (
+                                <div key={i} className="glass-card" style={{padding:'24px 16px',textAlign:'center'}}>
+                                    <AnimatedCounter target={item.target} suffix={item.suffix} />
+                                    <p style={{color:'rgba(255,255,255,0.4)',fontSize:'0.7rem',textTransform:'uppercase',letterSpacing:1,marginTop:8}}>{item.label}</p>
+                                </div>
+                            ))}
+                        </div>
 
-    <!-- ═══ CONTAINER 05: CO2 CALCULATOR (standalone) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #7c3aed 0%, #4c1d95 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">05</div>
-        <div class="idp">CO2-005</div>
-        <div class="ci">
-          <h3>CO2 Liquid Bulk Calculator</h3>
-          <div class="sub">Emission Estimation Tool &middot; Maritime Transport</div>
-          <div class="desc">Calculate CO2 emissions from liquid bulk cargo transport across Brazilian ports. Based on IMO methodology and ANTAQ operational data.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Method</div>
-              <div class="chip-val">IMO GHG</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Cargo</div>
-              <div class="chip-val">Liquid Bulk</div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://co2-liquid-bulk-calculator.vercel.app" target="_blank" class="cta">Open Calculator &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+                        <div className="glass-card" style={{padding:'12px 24px',display:'inline-block',marginBottom:40}}>
+                            <p style={{color:'rgba(255,255,255,0.6)',fontSize:'0.8rem'}}>Data Source: <span style={{color:'#34d399',fontWeight:600}}>ANTAQ (National Waterway Transportation Agency)</span></p>
+                        </div>
 
-    <!-- ═══ CONTAINER 06: TOOLS (right bottom) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #059669 0%, #064e3b 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">06</div>
-        <div class="idp">TOOL-006</div>
-        <div class="ci">
-          <h3>Research Tools</h3>
-          <div class="sub">AI-Powered Solutions</div>
-          <div class="desc">AI tools for maritime research: waste classification for port environments and SDG research analytics.</div>
-          <div class="cta-row">
-            <a href="https://blueportai.manus.space" target="_blank" class="cta">BluePort AI &rarr;</a>
-            <a href="https://sdgports.manus.space" target="_blank" class="cta">SDG Research Hub &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
+                        <nav style={{display:'flex',justifyContent:'center',gap:12,flexWrap:'wrap'}}>
+                            {['overview','compare','about'].map(s => (
+                                <button key={s} onClick={() => onNavigate(s)}
+                                    style={{padding:'10px 24px',borderRadius:8,border:'1px solid rgba(255,255,255,0.2)',background: s==='overview' ? '#059669' : 'rgba(255,255,255,0.06)',color:'#fff',fontWeight:600,fontSize:'0.875rem',cursor:'pointer',transition:'all 0.2s',textTransform:'capitalize'}}>
+                                    {s}
+                                </button>
+                            ))}
+                        </nav>
+                    </div>
+                </section>
+            );
+        }
 
-  </div>
-</section>
+        // ========== NAV BAR ==========
+        function NavBar({ onNavigate }) {
+            return (
+                <div className="nav-sticky">
+                    <div style={{maxWidth:1200,margin:'0 auto',display:'flex',alignItems:'center',gap:8,padding:'0 20px'}}>
+                        <span style={{fontWeight:800,fontSize:'0.95rem',color:'#059669',marginRight:16}}>BR Ports</span>
+                        {['overview','compare','about'].map(s => (
+                            <button key={s} className="nav-link" onClick={() => onNavigate(s)} style={{textTransform:'capitalize'}}>{s}</button>
+                        ))}
+                    </div>
+                </div>
+            );
+        }
 
-<!-- ═══ ABOUT ═══ -->
-<section class="wrap about" id="about">
-  <h2>About</h2>
-  <p>Brazil Port Data is a research platform designed to connect international stakeholders with structured, reliable data on the Brazilian port sector. The platform supports port authorities, investors, and maritime organisations in understanding infrastructure, performance, and sustainability across Brazilian ports.</p>
+        // ========== OVERVIEW ==========
+        function OverviewSection({ onSelectPort }) {
+            const [filter, setFilter] = useState('all');
+            const filtered = filter === 'all' ? PORTS :
+                filter === 'public' ? PORTS.filter(p => p.type === "Porto Organizado") :
+                PORTS.filter(p => p.type === "Terminal Autorizado");
 
-  <h2 style="margin-top: 32px;">Leadership</h2>
-  <p><strong>Prof. Dr. Darliane Cunha</strong> leads the Brazil Port Data initiative. With a doctorate in Finance and Accounting (Universidad de Zaragoza, Spain), a post-doctorate at Erasmus University Rotterdam, and 20+ years of research in maritime sustainability and port governance, she brings academic rigour and practical expertise to the platform.</p>
-  <p><a href="https://www.darlianecunha.com" target="_blank">Learn more about Prof. Cunha &rarr;</a></p>
-  <p style="margin-top: 18px; font-size: 0.82rem; color: #94a3b8;">Data sources: ANTAQ / Brazilian Ministry of Ports and Airports &middot; UN SDG Framework</p>
-</section>
+            const top5 = PORTS.slice(0, 5);
+            const lineData = [2021,2022,2023,2024,2025].map((yr, i) => {
+                const row = { year: yr };
+                top5.forEach(p => { row[p.name] = p.data[i].t; });
+                return row;
+            });
 
-<!-- ═══ CONTACT CTA ═══ -->
-<section class="contact-cta" id="contact">
-  <div class="wrap">
-    <h2>Interested in Brazilian Port Data?</h2>
-    <p>Whether you represent a port authority, maritime organisation, or research institution, we welcome collaboration and data-sharing partnerships.</p>
-    <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; font-family: 'DM Mono'; margin-bottom: 20px;">
-      <a href="mailto:darlianerc@gmail.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);">darlianerc@gmail.com</a>
-    </p>
-    <div class="contact-btns">
-      <a href="https://www.darlianecunha.com" target="_blank" class="contact-btn secondary">
-        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Visit Research Profile
-      </a>
-    </div>
-  </div>
-</section>
+            const barData = filtered.map(p => ({
+                name: p.name.length > 22 ? p.name.substring(0, 22) + '...' : p.name,
+                cargo: p.data[4].t,
+                id: p.id,
+                fill: p.type === "Porto Organizado" ? '#059669' : '#0e7490'
+            })).sort((a, b) => b.cargo - a.cargo);
 
-<footer>
-  &copy; 2026 Brazil Port Data &middot; All rights reserved &middot;
-  <a href="https://www.darlianecunha.com" target="_blank">Prof. Dr. Darliane Cunha</a>
-</footer>
+            return (
+                <section id="overview" style={{padding:'80px 20px',background:'#f9fafb'}}>
+                    <div style={{maxWidth:1200,margin:'0 auto'}}>
+                        <h2 style={{fontSize:'2rem',fontWeight:800,marginBottom:40}}>Overview</h2>
 
+                        <div className="kpi-grid" style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:16,marginBottom:40}}>
+                            <div className="kpi-card">
+                                <p className="kpi-label">Combined Cargo 2025</p>
+                                <p className="kpi-value">{fmt(totalCargo2025)}</p>
+                                <p style={{fontSize:'0.7rem',color:'#9ca3af'}}>tonnes</p>
+                            </div>
+                            <div className="kpi-card">
+                                <p className="kpi-label">Total Berthings 2025</p>
+                                <p className="kpi-value">{fmtFull(totalBerthings2025)}</p>
+                                <p style={{fontSize:'0.7rem',color:'#9ca3af'}}>operations</p>
+                            </div>
+                            <div className="kpi-card">
+                                <p className="kpi-label">Public Ports</p>
+                                <p className="kpi-value">{publicCount}</p>
+                                <p style={{fontSize:'0.7rem',color:'#9ca3af'}}>Porto Organizado</p>
+                            </div>
+                            <div className="kpi-card">
+                                <p className="kpi-label">#1 Facility</p>
+                                <p style={{fontSize:'1rem',fontWeight:700,color:'#111827'}}>{PORTS[0].name}</p>
+                                <p style={{fontSize:'0.7rem',color:'#9ca3af'}}>{PORTS[0].state}</p>
+                            </div>
+                        </div>
+
+                        <div className="section-card" style={{marginBottom:32}}>
+                            <h3 style={{fontSize:'1.1rem',fontWeight:700,marginBottom:20}}>Cargo Movement 2021-2025 (Top 5)</h3>
+                            <ResponsiveContainer width="100%" height={380}>
+                                <LineChart data={lineData}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                    <XAxis dataKey="year" />
+                                    <YAxis tickFormatter={v => fmt(v)} />
+                                    <Tooltip formatter={v => fmtTonnes(v)} />
+                                    <Legend />
+                                    {top5.map(p => (
+                                        <Line key={p.id} type="monotone" dataKey={p.name} stroke={p.color} strokeWidth={2} dot={{r:3}} isAnimationActive={false} />
+                                    ))}
+                                </LineChart>
+                            </ResponsiveContainer>
+                        </div>
+
+                        <div className="section-card">
+                            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:20,flexWrap:'wrap',gap:12}}>
+                                <h3 style={{fontSize:'1.1rem',fontWeight:700}}>2025 Ranking</h3>
+                                <div style={{display:'flex',gap:8}}>
+                                    {[['all','All'],['public','Public Ports'],['terminal','Terminals']].map(([key,label]) => (
+                                        <button key={key} className={`filter-btn ${filter===key?'active':''}`} onClick={() => setFilter(key)}>{label}</button>
+                                    ))}
+                                </div>
+                            </div>
+                            <ResponsiveContainer width="100%" height={Math.max(400, barData.length * 28)}>
+                                <BarChart data={barData} layout="vertical" margin={{left:10}}>
+                                    <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                    <XAxis type="number" tickFormatter={v => fmt(v)} />
+                                    <YAxis dataKey="name" type="category" width={180} tick={{fontSize:11}} interval={0} />
+                                    <Tooltip formatter={v => fmtTonnes(v)} />
+                                    <Bar dataKey="cargo" fill="#059669" radius={[0,4,4,0]} isAnimationActive={false}
+                                         onClick={(d) => onSelectPort(d.id)} style={{cursor:'pointer'}} />
+                                </BarChart>
+                            </ResponsiveContainer>
+                            <p style={{fontSize:'0.75rem',color:'#9ca3af',marginTop:12}}>Click any bar to view port details</p>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // ========== COMPARISON ==========
+        function ComparisonSection() {
+            const [sel, setSel] = useState(["santos", "paranagua", ""]);
+            const selected = sel.map(id => PORTS.find(p => p.id === id)).filter(Boolean);
+
+            const lineData = selected.length > 0 ? [2021,2022,2023,2024,2025].map((yr, i) => {
+                const row = { year: yr };
+                selected.forEach(p => { row[p.name] = p.data[i].t; });
+                return row;
+            }) : [];
+
+            const barData = selected.map(p => ({ name: p.name.length > 18 ? p.name.substring(0,18)+'...' : p.name, cargo: p.data[4].t }));
+
+            function updateSel(idx, val) {
+                const next = [...sel];
+                next[idx] = val;
+                setSel(next);
+            }
+
+            return (
+                <section id="compare" style={{padding:'80px 20px',background:'#f9fafb'}}>
+                    <div style={{maxWidth:1200,margin:'0 auto'}}>
+                        <h2 style={{fontSize:'2rem',fontWeight:800,marginBottom:40}}>Port Comparison Tool</h2>
+
+                        <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginBottom:40}}>
+                            {[0,1,2].map(idx => (
+                                <div key={idx} className="section-card">
+                                    <label style={{display:'block',fontSize:'0.8rem',fontWeight:600,color:'#6b7280',marginBottom:8}}>Port {idx+1}</label>
+                                    <select value={sel[idx]} onChange={e => updateSel(idx, e.target.value)}
+                                        style={{width:'100%',padding:'10px 12px',borderRadius:8,border:'1px solid #e5e7eb',fontSize:'0.875rem',fontWeight:500,fontFamily:'Inter',background:'#fff'}}>
+                                        <option value="">Select a port...</option>
+                                        {PORTS.map(p => <option key={p.id} value={p.id}>{p.rank}. {p.name}</option>)}
+                                    </select>
+                                </div>
+                            ))}
+                        </div>
+
+                        {selected.length >= 2 && (
+                            <div>
+                                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+                                    <div className="section-card">
+                                        <h3 style={{fontSize:'1rem',fontWeight:700,marginBottom:16}}>Cargo Trend Comparison</h3>
+                                        <ResponsiveContainer width="100%" height={300}>
+                                            <LineChart data={lineData}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                <XAxis dataKey="year" />
+                                                <YAxis tickFormatter={v => fmt(v)} />
+                                                <Tooltip formatter={v => fmtTonnes(v)} />
+                                                <Legend />
+                                                {selected.map(p => (
+                                                    <Line key={p.id} type="monotone" dataKey={p.name} stroke={p.color} strokeWidth={2} dot={{r:4}} isAnimationActive={false} />
+                                                ))}
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                    <div className="section-card">
+                                        <h3 style={{fontSize:'1rem',fontWeight:700,marginBottom:16}}>2025 Volume Comparison</h3>
+                                        <ResponsiveContainer width="100%" height={300}>
+                                            <BarChart data={barData}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                <XAxis dataKey="name" tick={{fontSize:10}} />
+                                                <YAxis tickFormatter={v => fmt(v)} />
+                                                <Tooltip formatter={v => fmtTonnes(v)} />
+                                                <Bar dataKey="cargo" fill="#059669" radius={[4,4,0,0]} isAnimationActive={false} />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </div>
+
+                                <div style={{display:'grid',gridTemplateColumns:'repeat('+selected.length+',1fr)',gap:16}}>
+                                    {selected.map(port => {
+                                        const g = pctChange(port.data[3].t, port.data[4].t);
+                                        return (
+                                            <div key={port.id} className="section-card">
+                                                <h4 style={{fontWeight:700,marginBottom:12,fontSize:'0.95rem'}}>{port.name}</h4>
+                                                <div style={{display:'grid',gap:8,fontSize:'0.85rem'}}>
+                                                    <div style={{display:'flex',justifyContent:'space-between'}}><span style={{color:'#6b7280'}}>2025 Cargo:</span><span style={{fontWeight:600}}>{fmtTonnes(port.data[4].t)}</span></div>
+                                                    <div style={{display:'flex',justifyContent:'space-between'}}><span style={{color:'#6b7280'}}>2025 Berthings:</span><span style={{fontWeight:600}}>{fmtFull(port.data[4].b)}</span></div>
+                                                    <div style={{display:'flex',justifyContent:'space-between'}}><span style={{color:'#6b7280'}}>YoY Growth:</span><span style={{fontWeight:600,color:g>=0?'#059669':'#dc2626'}}>{g>=0?'+':''}{g}%</span></div>
+                                                    <div style={{display:'flex',justifyContent:'space-between'}}><span style={{color:'#6b7280'}}>Top Cargo:</span><span style={{fontWeight:600}}>{port.cargoes[0][0]}</span></div>
+                                                </div>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+                        )}
+
+                        {selected.length < 2 && (
+                            <div className="section-card" style={{textAlign:'center',padding:48,color:'#9ca3af'}}>
+                                <p>Select at least 2 ports above to compare.</p>
+                            </div>
+                        )}
+                    </div>
+                </section>
+            );
+        }
+
+        // ========== PORT DETAILS MODAL ==========
+        function PortModal({ port, onClose }) {
+            if (!port) return null;
+            const c25 = port.data[4].t, c24 = port.data[3].t;
+            const yoy = pctChange(c24, c25);
+            const cumG = pctChange(port.data[0].t, c25);
+            const isPublic = port.type === 'Porto Organizado';
+
+            return (
+                <div className="modal-overlay" onClick={e => { if (e.target === e.currentTarget) onClose(); }}>
+                    <div className="modal-content">
+                        <div style={{background:'linear-gradient(135deg, #064e3b, #059669)',color:'#fff',padding:'32px',borderRadius:'16px 16px 0 0',display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+                            <div>
+                                <h2 style={{fontSize:'1.5rem',fontWeight:800,marginBottom:4}}>{port.name}</h2>
+                                <p style={{opacity:0.7,fontSize:'0.9rem'}}>{port.city}, {port.state}</p>
+                                <span className={`badge ${isPublic?'badge-public':'badge-terminal'}`} style={{marginTop:8}}>{isPublic ? 'Public Port' : 'Authorised Terminal'}</span>
+                            </div>
+                            <button onClick={onClose} style={{background:'rgba(255,255,255,0.2)',border:'none',color:'#fff',borderRadius:8,width:36,height:36,cursor:'pointer',fontSize:'1.2rem',display:'flex',alignItems:'center',justifyContent:'center'}}>X</button>
+                        </div>
+
+                        <div style={{padding:32}}>
+                            <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:12,marginBottom:32}}>
+                                <div className="kpi-card"><p className="kpi-label">2025 Cargo</p><p className="kpi-value" style={{fontSize:'1.3rem'}}>{fmtTonnes(c25)}</p></div>
+                                <div className="kpi-card"><p className="kpi-label">2024 Cargo</p><p className="kpi-value" style={{fontSize:'1.3rem'}}>{fmtTonnes(c24)}</p></div>
+                                <div className="kpi-card"><p className="kpi-label">Berthings 2025</p><p className="kpi-value" style={{fontSize:'1.3rem'}}>{fmtFull(port.data[4].b)}</p></div>
+                                <div className="kpi-card"><p className="kpi-label">YoY Growth</p><p className="kpi-value" style={{fontSize:'1.3rem',color:yoy>=0?'#059669':'#dc2626'}}>{yoy>=0?'+':''}{yoy}%</p></div>
+                            </div>
+
+                            <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:32}}>
+                                <div>
+                                    <h3 style={{fontWeight:700,marginBottom:16,fontSize:'1rem'}}>Top 5 Cargoes</h3>
+                                    {port.cargoes.map(([name, pct], i) => (
+                                        <div key={i} style={{marginBottom:12}}>
+                                            <div style={{display:'flex',justifyContent:'space-between',marginBottom:4}}>
+                                                <span style={{fontSize:'0.8rem',fontWeight:500,color:'#374151'}}>{name}</span>
+                                                <span style={{fontSize:'0.8rem',fontWeight:700,color:'#059669'}}>{pct}%</span>
+                                            </div>
+                                            <div className="progress-bar"><div className="progress-fill" style={{width:pct+'%'}}></div></div>
+                                        </div>
+                                    ))}
+                                </div>
+                                <div>
+                                    <h3 style={{fontWeight:700,marginBottom:16,fontSize:'1rem'}}>Port Information</h3>
+                                    <div style={{display:'grid',gap:10,fontSize:'0.85rem'}}>
+                                        {[
+                                            ['Rank', port.rank + ' / 20'],
+                                            ['Type', port.type],
+                                            ['Region', port.region],
+                                            ['State', port.sc],
+                                            ['5-Year Growth', (cumG>=0?'+':'') + cumG + '%'],
+                                        ].map(([k,v], i) => (
+                                            <div key={i} style={{display:'flex',justifyContent:'space-between',borderBottom:'1px solid #f3f4f6',paddingBottom:8}}>
+                                                <span style={{color:'#6b7280'}}>{k}</span><span style={{fontWeight:600}}>{v}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{marginBottom:24}}>
+                                <h3 style={{fontWeight:700,marginBottom:16,fontSize:'1rem'}}>Annual Cargo Movement</h3>
+                                <ResponsiveContainer width="100%" height={250}>
+                                    <LineChart data={port.data}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                        <XAxis dataKey="y" />
+                                        <YAxis tickFormatter={v => fmt(v)} />
+                                        <Tooltip formatter={v => fmtTonnes(v)} />
+                                        <Line type="monotone" dataKey="t" stroke={port.color} strokeWidth={2.5} dot={{r:5,fill:port.color}} isAnimationActive={false} name="Cargo" />
+                                    </LineChart>
+                                </ResponsiveContainer>
+                            </div>
+
+                            <div>
+                                <h3 style={{fontWeight:700,marginBottom:16,fontSize:'1rem'}}>Annual Berthings</h3>
+                                <ResponsiveContainer width="100%" height={200}>
+                                    <BarChart data={port.data}>
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                        <XAxis dataKey="y" />
+                                        <YAxis />
+                                        <Tooltip />
+                                        <Bar dataKey="b" fill={port.color} radius={[4,4,0,0]} isAnimationActive={false} name="Berthings" />
+                                    </BarChart>
+                                </ResponsiveContainer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        // ========== ABOUT ==========
+        function AboutSection() {
+            return (
+                <section id="about" style={{padding:'80px 20px',background:'#fff'}}>
+                    <div style={{maxWidth:1000,margin:'0 auto'}}>
+                          <h2 style={{fontSize:'2rem',fontWeight:800,marginBottom:40}}>About</h2>
+
+                        <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:24,marginBottom:48}}>
+                            <div className="section-card">
+                                <h3 style={{fontWeight:700,fontSize:'1.1rem',marginBottom:12}}>Project Overview</h3>
+                                <p style={{color:'#4b5563', lineHeight:1.7,fontSize:'0.9rem'}}>
+                                    This analytics dashboard provides comprehensive insights into Brazil's 20 largest ports and terminals, tracking cargo movement and operational metrics from 2021 through 2025. It covers public ports and authorised terminals across 12 Brazilian states, enabling port operators, researchers, and policymakers to analyse trends and compare facilities.
+                                </p>
+                            </div>
+                            <div className="section-card" style={{borderLeft:'4px solid #059669'}}>
+                                <h3 style={{fontWeight:700,fontSize:'1.1rem',marginBottom:12}}>About the Researcher</h3>
+                                <p style={{fontWeight:600,color:'#111827',marginBottom:8}}>Darliane Ribeiro Cunha, PhD</p>
+                                <p style={{color:'#4b5563',lineHeight:1.7,fontSize:'0.9rem',marginBottom:12}}>
+                                    Associate Professor at UFMA (Federal University of Maranhao). Researcher in maritime sustainability, port governance, and environmental analytics with 20+ years of experience.
+                                </p>
+                                <a href="mailto:darlianerc@gmail.com" style={{color:'#059669',fontWeight:600,fontSize:'0.85rem',textDecoration:'none'}}>darlianerc@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div className="section-card" style={{background:'#f9fafb',marginBottom:32}}>
+                            <h3 style={{fontWeight:700,marginBottom:8,fontSize:'0.95rem'}}>Data Source</h3>
+                            <p style={{color:'#4b5563',fontSize:'0.85rem'}}><strong>ANTAQ</strong> (Agencia Nacional de Transportes Aquaviarios) - National Waterway Transportation Agency. Official Brazilian agency for waterway regulation.</p>
+                        </div>
+                    </div>
+                </section>
+            );
+        }
+
+        // ========== APP ==========
+        function App() {
+            const [selectedPort, setSelectedPort] = useState(null);
+            const handleNavigate = (id) => {
+                const el = document.getElementById(id);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            };
+
+            return (
+                <div>
+                    <HeroSection onNavigate={handleNavigate} />
+                    <NavBar onNavigate={handleNavigate} />
+                    <OverviewSection onSelectPort={setSelectedPort} />
+                    <ComparisonSection />
+                    <AboutSection />
+                    <footer style={{background:'#0f172a',color:'#fff',padding:'32px 20px',textAlign:'center'}}>
+                        <p style={{color:'#6b7280',fontSize:'0.8rem'}}>2025 Brazil's Top 20 Ports & Terminals Dashboard. Data: ANTAQ. Developed by Darliane Ribeiro Cunha, PhD.</p>
+                    </footer>
+                    {selectedPort && <PortModal port={PORTS.find(p => p.id === selectedPort)} onClose={() => setSelectedPort(null)} />}
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
 </html>
