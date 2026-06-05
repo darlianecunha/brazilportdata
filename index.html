@@ -61,10 +61,11 @@
   /* Irregular placement */
   .sc:nth-child(1) { grid-column: 1 / 8;   grid-row: 1 / 6; }    /* SDG - wide left */
   .sc:nth-child(2) { grid-column: 8 / 13;  grid-row: 1 / 8; }    /* Top20 - tall right */
-  .sc:nth-child(3) { grid-column: 1 / 5;   grid-row: 6 / 13; }   /* Cargo - narrow left */
-  .sc:nth-child(4) { grid-column: 5 / 8;   grid-row: 6 / 11; }   /* Resources - small center */
-  .sc:nth-child(5) { grid-column: 5 / 9;   grid-row: 11 / 16; }  /* CO2 Calculator - standalone */
-  .sc:nth-child(6) { grid-column: 9 / 13;  grid-row: 8 / 16; }   /* Tools - right bottom */
+  .sc:nth-child(3) { grid-column: 1 / 5;   grid-row: 6 / 12; }   /* Cargo - narrow left */
+  .sc:nth-child(4) { grid-column: 5 / 8;   grid-row: 6 / 10; }   /* Resources - small center */
+  .sc:nth-child(5) { grid-column: 5 / 9;   grid-row: 10 / 15; }  /* CO2 Calculator - standalone */
+  .sc:nth-child(6) { grid-column: 9 / 13;  grid-row: 8 / 15; }   /* Tools - right bottom */
+  .sc:nth-child(7) { grid-column: 1 / 9;   grid-row: 15 / 20; }  /* Publications - wide bottom */
 
   /* Container shift offsets for irregularity */
   .sc:nth-child(1) { transform: rotate(-0.4deg); }
@@ -73,6 +74,7 @@
   .sc:nth-child(4) { transform: rotate(-0.6deg) translateY(-4px); }
   .sc:nth-child(5) { transform: rotate(0.25deg) translateX(-5px); }
   .sc:nth-child(6) { transform: rotate(-0.35deg) translateY(3px); }
+  .sc:nth-child(7) { transform: rotate(0.3deg) translateX(4px); }
 
   /* ═══ 3D CONTAINER ═══ */
   .sc {
@@ -231,6 +233,7 @@
   .sc:nth-child(4) { animation-delay: 0.28s; }
   .sc:nth-child(5) { animation-delay: 0.36s; }
   .sc:nth-child(6) { animation-delay: 0.44s; }
+  .sc:nth-child(7) { animation-delay: 0.52s; }
 
   /* ═══ RESPONSIVE ═══ */
   @media (max-width: 900px) {
@@ -239,7 +242,7 @@
       grid-auto-rows: auto;
     }
     .sc:nth-child(1), .sc:nth-child(2), .sc:nth-child(3),
-    .sc:nth-child(4), .sc:nth-child(5), .sc:nth-child(6) {
+    .sc:nth-child(4), .sc:nth-child(5), .sc:nth-child(6), .sc:nth-child(7) {
       grid-column: 1 / -1 !important;
       grid-row: auto !important;
       transform: none !important;
@@ -454,6 +457,39 @@
       </div>
     </div>
 
+    <!-- ═══ CONTAINER 07: PUBLICATIONS (wide bottom) ═══ -->
+    <div class="sc">
+      <div class="cb" style="background: linear-gradient(160deg, #1e3a5f 0%, #0f1b2d 100%)">
+        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
+        <div class="rkb">07</div>
+        <div class="idp">PUBL-007</div>
+        <div class="ci">
+          <h3>Publications &amp; Reports</h3>
+          <div class="sub">English-Language Research &middot; Brazilian Port Sector</div>
+          <div class="desc">Curated collection of peer-reviewed articles and policy reports on Brazilian ports: sustainability, decarbonisation, infrastructure, SDGs, and maritime innovation.</div>
+          <div class="chips">
+            <div class="chip">
+              <div class="chip-lbl">Articles</div>
+              <div class="chip-val">16</div>
+              <div class="chip-sub">peer-reviewed</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Reports</div>
+              <div class="chip-val">11</div>
+              <div class="chip-sub">policy &amp; industry</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Sources</div>
+              <div class="chip-val">Marine Policy, ICCT, McKinsey, Springer, Emerald</div>
+            </div>
+          </div>
+          <div class="cta-row">
+            <a href="https://publicationsaboutports.vercel.app/" target="_blank" class="cta">Browse Publications &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -474,7 +510,7 @@
     <h2>Interested in Brazilian Port Data?</h2>
     <p>Whether you represent a port authority, maritime organisation, or research institution, we welcome collaboration and data-sharing partnerships.</p>
     <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; font-family: 'DM Mono'; margin-bottom: 20px;">
-      <a href="mailto:darlianerc@gmail.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);">darlianerc@gmail.com</a>
+      <a href="mailto:darliane@brazilportdata.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);">darliane@brazilportdata.com</a>
     </p>
     <div class="contact-btns">
       <a href="https://www.darlianecunha.com" target="_blank" class="contact-btn secondary">
