@@ -45,6 +45,3 @@ brazil-port-data/
 
 ANTAQ (National Waterway Transport Agency) open statistics.
 
-## License
-
-Code: MIT · Data: public (ANTAQ)
