@@ -3,15 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brazil Port Data</title>
+<title>Publications &amp; Reports — Brazil Port Data</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --ocean: #0c4a6e; --teal: #0891b2; --bg: #e8eaed; }
-  body { font-family: 'Roboto', sans-serif; background: var(--bg); color: #1a1a2e; overflow-x: hidden; }
-  .wrap { max-width: 1260px; margin: 0 auto; padding: 0 24px; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --ocean: #0c4a6e; --teal: #0891b2; --bg: #f0f2f5; }
+  body { font-family: 'Roboto', sans-serif; background: var(--bg); color: #1a1a2e; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 24px; }
 
-  /* ═══ HEADER ═══ */
   header {
     position: sticky; top: 0; z-index: 100;
     background: rgba(255,255,255,0.92); backdrop-filter: blur(14px);
@@ -33,228 +32,71 @@
   }
   .hdr-nav a:hover { background: #f1f5f9; color: var(--ocean); }
 
-  /* ═══ HERO ═══ */
-  .hero { padding: 48px 0 16px; }
+  .hero { padding: 56px 0 32px; }
   .hero h1 {
-    font-family: 'Sora'; font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800; color: var(--ocean); line-height: 1.12; margin-bottom: 10px;
+    font-family: 'Sora'; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800; color: var(--ocean); line-height: 1.15; margin-bottom: 10px;
   }
-  .hero p { font-size: 1rem; color: #64748b; max-width: 640px; line-height: 1.6; }
+  .hero p { font-size: 0.95rem; color: #64748b; max-width: 620px; line-height: 1.6; }
 
-  /* ═══ SECTION LABEL ═══ */
-  .slbl {
+  .section-label {
     font-family: 'Sora'; font-size: 0.7rem; text-transform: uppercase;
-    letter-spacing: 3px; color: #94a3b8; margin-bottom: 20px;
+    letter-spacing: 3px; color: #94a3b8; margin: 48px 0 20px;
     display: flex; align-items: center; gap: 12px;
   }
-  .slbl::after { content: ''; flex: 1; height: 1px; background: #d0d5dd; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: #d0d5dd; }
 
-  /* ═══ CONTAINER YARD - BENTO GRID ═══ */
-  .yard { padding-bottom: 48px; }
-  .bento {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(40px, auto);
-    gap: 14px;
+  .stats-bar { display: flex; gap: 14px; flex-wrap: wrap; margin: 24px 0 8px; }
+  .stat-chip {
+    background: white; border: 1px solid #e8ecf2; border-radius: 10px;
+    padding: 14px 20px; flex: 1; min-width: 140px;
   }
+  .stat-label { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1px; color: #94a3b8; }
+  .stat-value { font-family: 'DM Mono'; font-size: 1.3rem; font-weight: 500; color: var(--ocean); margin-top: 4px; }
+  .stat-sub { font-size: 0.7rem; color: #94a3b8; margin-top: 2px; }
 
-  /* Irregular placement */
-  .sc:nth-child(1) { grid-column: 1 / 8;   grid-row: 1 / 6; }    /* SDG - wide left */
-  .sc:nth-child(2) { grid-column: 8 / 13;  grid-row: 1 / 8; }    /* Top20 - tall right */
-  .sc:nth-child(3) { grid-column: 1 / 5;   grid-row: 6 / 12; }   /* Cargo - narrow left */
-  .sc:nth-child(4) { grid-column: 5 / 8;   grid-row: 6 / 10; }   /* Resources - small center */
-  .sc:nth-child(5) { grid-column: 5 / 9;   grid-row: 10 / 15; }  /* CO2 Calculator - standalone */
-  .sc:nth-child(6) { grid-column: 9 / 13;  grid-row: 8 / 15; }   /* Tools - right bottom */
-  .sc:nth-child(7) { grid-column: 1 / 9;   grid-row: 15 / 20; }  /* Publications - wide bottom */
-
-  /* Container shift offsets for irregularity */
-  .sc:nth-child(1) { transform: rotate(-0.4deg); }
-  .sc:nth-child(2) { transform: rotate(0.3deg) translateY(6px); }
-  .sc:nth-child(3) { transform: rotate(0.5deg) translateX(3px); }
-  .sc:nth-child(4) { transform: rotate(-0.6deg) translateY(-4px); }
-  .sc:nth-child(5) { transform: rotate(0.25deg) translateX(-5px); }
-  .sc:nth-child(6) { transform: rotate(-0.35deg) translateY(3px); }
-  .sc:nth-child(7) { transform: rotate(0.3deg) translateX(4px); }
-
-  /* ═══ 3D CONTAINER ═══ */
-  .sc {
-    position: relative;
-    transition: transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease;
-    animation: fadeIn 0.6s ease forwards;
-    opacity: 0;
+  .pub-card {
+    background: white; border-radius: 10px; padding: 24px 28px;
+    margin-bottom: 14px; border: 1px solid #e8ecf2;
+    transition: box-shadow 0.25s, transform 0.25s;
   }
-  .sc:hover { transform: rotate(0deg) translateY(-3px) scale(1.008) !important; z-index: 10; }
-
-  .cb {
-    position: relative; border-radius: 5px; overflow: hidden; height: 100%;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 3px 10px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.12);
+  .pub-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .pub-num {
+    font-family: 'DM Mono'; font-size: 0.65rem; font-weight: 500;
+    color: #94a3b8; letter-spacing: 1px; margin-bottom: 6px;
   }
-  /* corrugation */
-  .cb::before {
-    content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 46px, rgba(0,0,0,0.05) 46px, rgba(0,0,0,0.05) 48px);
-    pointer-events: none; z-index: 1;
+  .pub-title {
+    font-family: 'Sora'; font-size: 1.05rem; font-weight: 700;
+    color: var(--ocean); line-height: 1.4; margin-bottom: 8px;
   }
-  /* light reflection */
-  .cb::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 100%);
-    pointer-events: none; z-index: 2;
+  .pub-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+  .badge {
+    display: inline-block; font-size: 0.68rem; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
   }
-
-  /* corner fittings */
-  .cf { position: absolute; width: 14px; height: 14px; border: 2.5px solid rgba(255,255,255,0.20); border-radius: 2px; z-index: 3; }
-  .cf.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
-  .cf.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
-  .cf.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
-  .cf.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
-  .idp {
-    position: absolute; top: 10px; right: 14px;
-    font-family: 'DM Mono'; font-size: 0.58rem; font-weight: 500;
-    letter-spacing: 2px; color: rgba(255,255,255,0.25); z-index: 3;
-  }
-  .rkb {
-    position: absolute; bottom: 8px; right: 14px;
-    font-family: 'Sora'; font-size: 2.2rem; font-weight: 800;
-    color: rgba(255,255,255,0.05); z-index: 3;
-  }
-
-  /* inner content */
-  .ci { position: relative; z-index: 3; padding: 28px 26px; color: white; height: 100%; display: flex; flex-direction: column; }
-  .ci h3 { font-family: 'Sora'; font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
-  .ci .sub { font-size: 0.72rem; opacity: 0.6; margin-bottom: 8px; }
-  .ci .desc { font-size: 0.82rem; opacity: 0.8; line-height: 1.5; margin-bottom: 16px; }
-
-  /* data chips */
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
-  .chip {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.13);
-    border-radius: 7px; padding: 8px 12px; min-width: 90px;
-  }
-  .chip-lbl { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; }
-  .chip-val { font-family: 'DM Mono'; font-size: 0.92rem; font-weight: 500; margin-top: 2px; }
-  .chip-sub { font-size: 0.58rem; opacity: 0.45; margin-top: 1px; }
-
-  /* mini table */
-  .mtbl { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
-  .mtbl th {
-    text-align: left; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px;
-    opacity: 0.45; padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.12);
-  }
-  .mtbl th:last-child, .mtbl td:last-child { text-align: right; }
-  .mtbl td {
-    font-size: 0.76rem; padding: 5px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-  .mtbl td:last-child { font-family: 'DM Mono'; font-size: 0.72rem; }
-
-  /* mini bars */
-  .mbars { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
-  .mbar { display: flex; align-items: center; gap: 8px; }
-  .mbar-lbl { font-size: 0.7rem; width: 85px; flex-shrink: 0; opacity: 0.8; }
-  .mbar-track { flex: 1; height: 16px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
-  .mbar-fill { height: 100%; border-radius: 4px; background: rgba(255,255,255,0.32); display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; }
-  .mbar-val { font-family: 'DM Mono'; font-size: 0.58rem; white-space: nowrap; }
-
-  /* CTA */
-  .cta {
+  .badge-year { background: #eef4ff; color: var(--ocean); }
+  .badge-journal { background: #f0fdf4; color: #166534; }
+  .badge-topic { background: #fef3c7; color: #92400e; }
+  .pub-authors { font-size: 0.8rem; color: #7c8a9a; font-style: italic; margin-bottom: 10px; }
+  .pub-desc { font-size: 0.85rem; color: #555; line-height: 1.6; margin-bottom: 14px; }
+  .pub-link {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 18px; background: rgba(255,255,255,0.13);
-    border: 1.5px solid rgba(255,255,255,0.22); border-radius: 8px;
-    color: white; text-decoration: none; font-weight: 600; font-size: 0.8rem;
-    transition: all 0.25s;
+    font-size: 0.8rem; color: var(--teal); text-decoration: none; font-weight: 600;
+    transition: color 0.2s;
   }
-  .cta:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
-  .cta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+  .pub-link:hover { color: var(--ocean); }
 
-  /* ═══ CONTACT CTA ═══ */
-  .contact-cta {
-    background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 100%);
-    padding: 52px 0; text-align: center;
+  footer {
+    background: var(--ocean); color: rgba(255,255,255,0.5);
+    text-align: center; padding: 28px; font-size: 0.82rem; margin-top: 56px;
   }
-  .contact-cta h2 {
-    font-family: 'Sora'; font-size: clamp(1.3rem, 3vw, 1.8rem);
-    font-weight: 700; color: white; margin-bottom: 10px;
-  }
-  .contact-cta p {
-    color: rgba(255,255,255,0.6); font-size: 0.95rem;
-    max-width: 520px; margin: 0 auto 24px; line-height: 1.6;
-  }
-  .contact-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .contact-btn {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 13px 26px; border-radius: 10px; font-weight: 600;
-    font-size: 0.88rem; text-decoration: none; transition: all 0.25s;
-  }
-  .contact-btn.primary { background: white; color: var(--ocean); }
-  .contact-btn.primary:hover { background: #f0f9ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-  .contact-btn.secondary {
-    background: rgba(255,255,255,0.12); color: white;
-    border: 1.5px solid rgba(255,255,255,0.25);
-  }
-  .contact-btn.secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
-  .contact-icon { width: 20px; height: 20px; display: inline-block; }
-
-  /* ═══ ABOUT ═══ */
-  .about { padding: 56px 0; border-top: 1px solid #e0e0e0; }
-  .about h2 { font-family: 'Sora'; font-size: 1.6rem; font-weight: 700; color: var(--ocean); margin-bottom: 12px; }
-  .about p { color: #64748b; line-height: 1.7; max-width: 720px; margin-bottom: 12px; }
-  .about a { color: var(--teal); text-decoration: none; font-weight: 500; }
-  .about a:hover { text-decoration: underline; }
-
-  /* ═══ FOOTER ═══ */
-  footer { background: var(--ocean); color: rgba(255,255,255,0.5); text-align: center; padding: 28px; font-size: 0.82rem; }
   footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
   footer a:hover { color: white; }
 
-  /* ═══ GROUND MARKINGS (yard lines) ═══ */
-  .yard-ground {
-    position: relative;
-  }
-  .yard-ground::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    width: 3px; height: 100%;
-    background: repeating-linear-gradient(180deg, #d0d5dd 0px, #d0d5dd 12px, transparent 12px, transparent 24px);
-    opacity: 0.5;
-    z-index: 0;
-  }
-
-  /* ═══ ANIMATIONS ═══ */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; }
-  }
-  .sc:nth-child(1) { animation-delay: 0.05s; }
-  .sc:nth-child(2) { animation-delay: 0.12s; }
-  .sc:nth-child(3) { animation-delay: 0.20s; }
-  .sc:nth-child(4) { animation-delay: 0.28s; }
-  .sc:nth-child(5) { animation-delay: 0.36s; }
-  .sc:nth-child(6) { animation-delay: 0.44s; }
-  .sc:nth-child(7) { animation-delay: 0.52s; }
-
-  /* ═══ RESPONSIVE ═══ */
-  @media (max-width: 900px) {
-    .bento {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto;
-    }
-    .sc:nth-child(1), .sc:nth-child(2), .sc:nth-child(3),
-    .sc:nth-child(4), .sc:nth-child(5), .sc:nth-child(6), .sc:nth-child(7) {
-      grid-column: 1 / -1 !important;
-      grid-row: auto !important;
-      transform: none !important;
-    }
-    .sc:hover { transform: translateY(-3px) !important; }
-    .ci { padding: 22px 18px; }
-    .chips { gap: 5px; }
-    .chip { min-width: 80px; padding: 7px 10px; }
+  @media (max-width: 768px) {
+    .pub-card { padding: 18px 16px; }
     .hdr-nav { display: none; }
-    .mbar-lbl { width: 65px; font-size: 0.64rem; }
-    .contact-btns { flex-direction: column; align-items: center; }
-    .yard-ground::before { display: none; }
+    .stats-bar { flex-direction: column; }
   }
 </style>
 </head>
@@ -265,265 +107,487 @@
     <div class="logo">B</div>
     <div>
       <div class="hdr-title">Brazil Port Data</div>
-      <div class="hdr-sub">RESEARCH &middot; ANALYTICS &middot; SUSTAINABILITY</div>
+      <div class="hdr-sub">PUBLICATIONS &amp; REPORTS</div>
     </div>
     <nav class="hdr-nav">
-      <a href="#yard">Projects</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+      <a href="./index.html">Home</a>
+      <a href="./index.html#about">About</a>
+      <a href="./index.html#contact">Contact</a>
     </nav>
   </div>
 </header>
 
-<section class="wrap hero">
-  <h1>Brazilian Port Sector<br>Data &amp; Research Hub</h1>
-  <p>Structured data, analytics, and sustainability insights on Brazilian ports. A research platform connecting international stakeholders to reliable port sector intelligence.</p>
-</section>
+<div class="wrap">
 
-<section class="wrap yard" id="yard">
-  <div class="slbl">Container Yard &middot; Select a Project</div>
-  <div class="bento yard-ground">
-
-    <!-- ═══ CONTAINER 01: SDG PORT HUB (wide left) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #0e7490 0%, #0c4a6e 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">01</div>
-        <div class="idp">SDGP-001</div>
-        <div class="ci">
-          <h3>SDG Port Hub</h3>
-          <div class="sub">Sustainable Development Goals &middot; Port Assessment Tool</div>
-          <div class="desc">Interactive platform for evaluating and simulating SDG performance across ports worldwide. Attribute-based assessment, benchmarking, and sustainability metrics aligned with the UN 2030 Agenda.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Focus</div>
-              <div class="chip-val">17 SDGs</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Tool</div>
-              <div class="chip-val">Simulation</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Scope</div>
-              <div class="chip-val">Global</div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://www.sdgporthub.com" target="_blank" class="cta">Visit SDG Port Hub &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ CONTAINER 02: TOP 20 PORTS (tall right) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #dc2626 0%, #991b1b 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">02</div>
-        <div class="idp">TOP20-002</div>
-        <div class="ci">
-          <h3>Top 20 Ports &amp; Terminals</h3>
-          <div class="sub">Cargo Dashboard &middot; 2021-2025 &middot; ANTAQ</div>
-          <div class="desc">Individual profiles for Brazil's 20 largest ports ranked by cargo volume.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Combined 2025</div>
-              <div class="chip-val">908.5M t</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">#1 Volume</div>
-              <div class="chip-val">Ponta da Madeira</div>
-            </div>
-          </div>
-          <table class="mtbl">
-            <thead><tr><th>#</th><th>Facility</th><th>2025</th></tr></thead>
-            <tbody>
-              <tr><td>1</td><td>Ponta da Madeira</td><td>172.4M t</td></tr>
-              <tr><td>2</td><td>Port of Santos</td><td>142.8M t</td></tr>
-              <tr><td>3</td><td>Tubarao Terminal</td><td>87.4M t</td></tr>
-              <tr><td>4</td><td>Angra dos Reis</td><td>70.4M t</td></tr>
-              <tr><td>5</td><td>Paranagua</td><td>66.4M t</td></tr>
-            </tbody>
-          </table>
-          <div class="cta-row">
-            <a href="https://brazilport20.vercel.app/" target="_blank" class="cta">Open Dashboard &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ CONTAINER 03: CARGO MOVEMENT (narrow left) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #1d4ed8 0%, #0c2340 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">03</div>
-        <div class="idp">MOVP-003</div>
-        <div class="ci">
-          <h3>Cargo Movement</h3>
-          <div class="sub">ANTAQ 2010-2024 &middot; All Ports</div>
-          <div class="desc">15 years of Brazilian port cargo data. Filters by year, facility, cargo profile, direction, navigation, and state.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Total 2024</div>
-              <div class="chip-val">1.21B t</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">vs 2023</div>
-              <div class="chip-val" style="color: #fca5a5">-7.2%</div>
-            </div>
-          </div>
-          <div class="mbars">
-            <div class="mbar">
-              <div class="mbar-lbl">Dry Bulk</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 60%"><span class="mbar-val">727M t</span></div></div>
-            </div>
-            <div class="mbar">
-              <div class="mbar-lbl">Liquid</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 24%"><span class="mbar-val">287M t</span></div></div>
-            </div>
-            <div class="mbar">
-              <div class="mbar-lbl">Container</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 11%"><span class="mbar-val">138M t</span></div></div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://portflow-site.vercel.app/" target="_blank" class="cta">Open Dashboard &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ CONTAINER 04: RESOURCES (small center) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #d97706 0%, #92400e 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">04</div>
-        <div class="idp">RSRC-004</div>
-        <div class="ci">
-          <h3>ANTAQ Resources</h3>
-          <div class="sub">Official Data Portals</div>
-          <div class="desc">Direct access to official Brazilian port authority dashboards and data.</div>
-          <div class="cta-row">
-            <a href="https://aquarela.antaq.gov.br/single/?appid=5944b812-2cbd-4680-a7b6-004d0ce476dc&sheet=05d6dc11-6d7d-4bda-8142-fbd3a0ee3904&theme=classic&opt=currsel%2Cctxmenu" target="_blank" class="cta">ANTAQ Portal &rarr;</a>
-            <a href="https://aquarela.antaq.gov.br/single/?appid=775bf8ab-83e5-4049-9178-a0b0a94ad88b&sheet=ThLpNXe&opt=currsel%2Cctxmenu" target="_blank" class="cta">ANTAQ IDA &rarr;</a>
-            <a href="https://aquarela.antaq.gov.br/single/?appid=7367309e-6dd4-4b72-bd0c-3998768f72bf&sheet=517b258c-f119-4b2d-80a8-7b536ddbeed2&bookmark=c8125ac7-d193-4683-80aa-fa2f3a2e9712&opt=currsel%2Cctxmenu&select=clearall" target="_blank" class="cta">Public Ports &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ CONTAINER 05: CO2 CALCULATOR (standalone) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #7c3aed 0%, #4c1d95 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">05</div>
-        <div class="idp">CO2-005</div>
-        <div class="ci">
-          <h3>CO2 Liquid Bulk Calculator</h3>
-          <div class="sub">Emission Estimation Tool &middot; Maritime Transport</div>
-          <div class="desc">Calculate CO2 emissions from liquid bulk cargo transport across Brazilian ports. Based on IMO methodology and ANTAQ operational data.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Method</div>
-              <div class="chip-val">IMO GHG</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Cargo</div>
-              <div class="chip-val">Liquid Bulk</div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://co2-liquid-bulk-calculator.vercel.app" target="_blank" class="cta">Open Calculator &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ CONTAINER 06: TOOLS (right bottom) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #059669 0%, #064e3b 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">06</div>
-        <div class="idp">TOOL-006</div>
-        <div class="ci">
-          <h3>Research Tools</h3>
-          <div class="sub">AI-Powered Solutions</div>
-          <div class="desc">AI tools for maritime research: waste classification for port environments and SDG research analytics.</div>
-          <div class="cta-row">
-            <a href="https://blueportai.manus.space" target="_blank" class="cta">BluePort AI &rarr;</a>
-            <a href="https://sdgports.manus.space" target="_blank" class="cta">SDG Research Hub &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ═══ CONTAINER 07: PUBLICATIONS (wide bottom) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #1e3a5f 0%, #0f1b2d 100%)">
-        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">07</div>
-        <div class="idp">PUBL-007</div>
-        <div class="ci">
-          <h3>Publications &amp; Reports</h3>
-          <div class="sub">English-Language Research &middot; Brazilian Port Sector</div>
-          <div class="desc">Curated collection of peer-reviewed articles and policy reports on Brazilian ports: sustainability, decarbonisation, infrastructure, SDGs, and maritime innovation.</div>
-          <div class="chips">
-            <div class="chip">
-              <div class="chip-lbl">Articles</div>
-              <div class="chip-val">16</div>
-              <div class="chip-sub">peer-reviewed</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Reports</div>
-              <div class="chip-val">11</div>
-              <div class="chip-sub">policy &amp; industry</div>
-            </div>
-            <div class="chip">
-              <div class="chip-lbl">Sources</div>
-              <div class="chip-val">Marine Policy, ICCT, McKinsey, Springer, Emerald</div>
-            </div>
-          </div>
-          <div class="cta-row">
-            <a href="https://publicationsaboutports.vercel.app/" target="_blank" class="cta">Browse Publications &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
+  <div class="hero">
+    <h1>Publications &amp; Reports</h1>
+    <p>Curated English-language research on the Brazilian port sector. Peer-reviewed articles, policy reports, and industry analyses covering sustainability, decarbonisation, infrastructure, and maritime innovation.</p>
   </div>
-</section>
 
-<!-- ═══ ABOUT ═══ -->
-<section class="wrap about" id="about">
-  <h2>About</h2>
-  <p>Brazil Port Data is a research platform designed to connect international stakeholders with structured, reliable data on the Brazilian port sector. The platform supports port authorities, investors, and maritime organisations in understanding infrastructure, performance, and sustainability across Brazilian ports.</p>
-
-  <h2 style="margin-top: 32px;">Leadership</h2>
-  <p><strong>Prof. Dr. Darliane Cunha</strong> leads the Brazil Port Data initiative. With a doctorate in Finance and Accounting (Universidad de Zaragoza, Spain), a post-doctorate at Erasmus University Rotterdam, and 20+ years of research in maritime sustainability and port governance, she brings academic rigour and practical expertise to the platform.</p>
-  <p><a href="https://www.darlianecunha.com" target="_blank">Learn more about Prof. Cunha &rarr;</a></p>
-  <p style="margin-top: 18px; font-size: 0.82rem; color: #94a3b8;">Data sources: ANTAQ / Brazilian Ministry of Ports and Airports &middot; UN SDG Framework</p>
-</section>
-
-<!-- ═══ CONTACT CTA ═══ -->
-<section class="contact-cta" id="contact">
-  <div class="wrap">
-    <h2>Interested in Brazilian Port Data?</h2>
-    <p>Whether you represent a port authority, maritime organisation, or research institution, we welcome collaboration and data-sharing partnerships.</p>
-    <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; font-family: 'DM Mono'; margin-bottom: 20px;">
-      <a href="mailto:darliane@brazilportdata.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);">darliane@brazilportdata.com</a>
-    </p>
-    <div class="contact-btns">
-      <a href="https://www.darlianecunha.com" target="_blank" class="contact-btn secondary">
-        <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-        Visit Research Profile
-      </a>
+  <div class="stats-bar">
+    <div class="stat-chip">
+      <div class="stat-label">Peer-Reviewed</div>
+      <div class="stat-value">16</div>
+      <div class="stat-sub">academic articles</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-label">Policy &amp; Industry</div>
+      <div class="stat-value">11</div>
+      <div class="stat-sub">reports &amp; analyses</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-label">Time Span</div>
+      <div class="stat-value">2019-2025</div>
+      <div class="stat-sub">publication years</div>
+    </div>
+    <div class="stat-chip">
+      <div class="stat-label">Key Sources</div>
+      <div class="stat-value">Marine Policy, ICCT, McKinsey, Springer, Emerald</div>
+      <div class="stat-sub">journals &amp; institutions</div>
     </div>
   </div>
-</section>
+
+  <div class="section-label">Peer-Reviewed Articles</div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 01</div>
+    <div class="pub-title">SDG Attributes: A Sustainability Assessment Framework for Brazilian Ports</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">Marine Policy</span>
+      <span class="badge badge-topic">SDGs / Sustainability</span>
+    </div>
+    <div class="pub-authors">Cunha, D.R., Costa, M.D.C., Oliveira, C.B.M. &amp; Pereira, N.N.</div>
+    <div class="pub-desc">Develops a sustainability index with 20 dimensions and 84 indicators, applied to 6 Brazilian ports handling 30% of the country's cargo volume.</div>
+    <a class="pub-link" href="https://www.sciencedirect.com/science/article/abs/pii/S0308597X2500257X" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ScienceDirect
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 02</div>
+    <div class="pub-title">Unlocking Brazil's Maritime Potential: Expanding Ports for Post-Panamax Operations</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">JMSE / MDPI</span>
+      <span class="badge badge-topic">Infrastructure</span>
+    </div>
+    <div class="pub-authors">Pimenta, A.M., Puig, M., Mallman, D.L.B., Nobrega, R.A.A. &amp; Darbra, R.M.</div>
+    <div class="pub-desc">Identifies ports with Post-Panamax potential: Santos, Ponta da Madeira, and Itaguai. Focuses on draught depth and infrastructure bottlenecks.</div>
+    <a class="pub-link" href="https://www.mdpi.com/2077-1312/13/5/938" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on MDPI
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 03</div>
+    <div class="pub-title">Strategies for Decarbonisation in the Port and Maritime Sector: Key Challenges and Leading Ports</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">RGSA</span>
+      <span class="badge badge-topic">Decarbonisation</span>
+    </div>
+    <div class="pub-authors">Cunha, D.R., Oliveira, C.B.M., Porte, M.S., Cutrim, S.S. &amp; Pereira, N.N.</div>
+    <div class="pub-desc">Bibliometric study of 68 articles using VOSviewer. Maps trends and best practices in port sector decarbonisation, with references to Brazilian ports.</div>
+    <a class="pub-link" href="https://rgsa.openaccesspublications.org/rgsa/article/view/11963" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on RGSA
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 04</div>
+    <div class="pub-title">Innovation Under Pressures: Analysis of Practices in the Port Sector</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">Revista de Gestao (Emerald)</span>
+      <span class="badge badge-topic">Innovation</span>
+    </div>
+    <div class="pub-authors">Oliveira, R.S.D. &amp; Lavarda, C.E.F.</div>
+    <div class="pub-desc">Analyses institutional pressures on innovation practices in the Brazilian port sector through qualitative interviews with industry professionals.</div>
+    <a class="pub-link" href="https://www.emerald.com/rege/article/doi/10.1108/REGE-10-2024-0154/1310573/" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Emerald
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 05</div>
+    <div class="pub-title">Sustainability Practices for SDGs: A Study of Brazilian Ports</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">Environment, Development &amp; Sustainability (Springer)</span>
+      <span class="badge badge-topic">SDGs</span>
+    </div>
+    <div class="pub-authors">Cunha, D.R., Pereira, N.N., Porte, M.S. et al.</div>
+    <div class="pub-desc">Finds SDG 8, 11, and 14 most frequently addressed in Brazilian port reports. Sustainability actions remain incipient across most public ports.</div>
+    <a class="pub-link" href="https://link.springer.com/article/10.1007/s10668-023-03126-y" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Springer
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 06</div>
+    <div class="pub-title">Sustainable Practices in Brazilian Ports: Aligning with SDGs 9, 13, and 14</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">RGSA</span>
+      <span class="badge badge-topic">SDGs</span>
+    </div>
+    <div class="pub-authors">Diniz, N.V., Cunha, D.R., Porte, M.S., Pereira, N.N. &amp; Oliveira, C.B.M.</div>
+    <div class="pub-desc">Examines alignment of Brazilian ports with SDG 9 (Infrastructure), SDG 13 (Climate Action), and SDG 14 (Life Below Water).</div>
+    <a class="pub-link" href="https://rgsa.openaccesspublications.org/rgsa/article/view/9744" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on RGSA
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 07</div>
+    <div class="pub-title">Port Sustainability Initiatives: A Study of Brazilian Public Ports</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">Academia.edu</span>
+      <span class="badge badge-topic">Sustainability</span>
+    </div>
+    <div class="pub-authors">Cunha, D.R., Pereira, N.N., Porte, M.S. et al.</div>
+    <div class="pub-desc">Inventories sustainability initiatives across Brazilian public ports with a comparative analysis of practices and outcomes.</div>
+    <a class="pub-link" href="https://www.academia.edu/136886921/Port_sustainability_initiatives_a_study_of_brazilian_public_ports" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Academia.edu
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 08</div>
+    <div class="pub-title">Can the Brazilian National Logistics Plan Induce Port Competitiveness by Reshaping the Port Service Areas?</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2022</span>
+      <span class="badge badge-journal">ResearchGate</span>
+      <span class="badge badge-topic">Logistics / Competitiveness</span>
+    </div>
+    <div class="pub-authors">Costa, W., Soares-Filho, B. &amp; Nobrega, R.</div>
+    <div class="pub-desc">Evaluates the impact of Brazil's National Logistics Plan on transport costs and port competitiveness using minimum-cost algorithms.</div>
+    <a class="pub-link" href="https://www.researchgate.net/publication/365228138" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ResearchGate
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 09</div>
+    <div class="pub-title">Best Practices in ESG: A Benchmarking for Brazilian Seaports Sustainability Journey</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">Journal of Shipping and Trade (Springer)</span>
+      <span class="badge badge-topic">ESG / Sustainability</span>
+    </div>
+    <div class="pub-authors">Galvao, C.B., Robles, L.T., Cutrim, S.S. et al.</div>
+    <div class="pub-desc">Reviews Brazil's Best Practices Guide for Port Sustainability (2023), a pioneering ESG framework developed collaboratively by UFMA, the Association of Private Port Terminals, and the Brazilian Association of Port and Waterway Entities.</div>
+    <a class="pub-link" href="https://jshippingandtrade.springeropen.com/articles/10.1186/s41072-025-00206-2" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Springer
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 10</div>
+    <div class="pub-title">Ports and Climate Change: A Systematic Review Aligned With the Sustainable Development Goals</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">Sustainable Development (Wiley)</span>
+      <span class="badge badge-topic">Climate / SDGs</span>
+    </div>
+    <div class="pub-authors">Goncalves, A., Dutra, A.R.A., Guerra, J.B.S.O.A. &amp; Dutra, A.</div>
+    <div class="pub-desc">Systematic literature review investigating how international literature addresses the role of ports in climate change, resulting in a bibliographic portfolio of 33 scientific articles aligned with the SDGs.</div>
+    <a class="pub-link" href="https://onlinelibrary.wiley.com/doi/abs/10.1002/sd.70352" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Wiley
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 11</div>
+    <div class="pub-title">Brazilian Maritime Containerized Cabotage Competitiveness Assessment Based on a Multimodal Super Network</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">Journal of Transport Geography (Elsevier)</span>
+      <span class="badge badge-topic">Cabotage / Logistics</span>
+    </div>
+    <div class="pub-authors">Da Costa, G.A.A., Mendes, A.B. &amp; Da Cruz, J.P.G.</div>
+    <div class="pub-desc">Evaluates the competitiveness of Brazilian maritime container cabotage within a multimodal transportation super network using network optimisation methods.</div>
+    <a class="pub-link" href="https://www.sciencedirect.com/science/article/pii/S0966692324002710" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ScienceDirect
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 12</div>
+    <div class="pub-title">Brazilian Port Reform: An Analysis of Investments After Law 12.815/2013</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">ResearchGate</span>
+      <span class="badge badge-topic">Reform / Investment</span>
+    </div>
+    <div class="pub-authors">Ribeiro da Gloria, H., Barbosa, D. &amp; Vianna, N.</div>
+    <div class="pub-desc">Analyses the impact of Brazil's 2013 port reform law on investment patterns, examining how the regulatory shift from public management to a landlord model transformed capital flows across the sector.</div>
+    <a class="pub-link" href="https://www.researchgate.net/publication/387469895_Brazilian_port_reform_An_analysis_of_investments_after_law_n_128152013" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ResearchGate
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 13</div>
+    <div class="pub-title">Assessment of Port Governance Model: Evidence from the Brazilian Ports</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2022</span>
+      <span class="badge badge-journal">Maritime Business Review (Emerald)</span>
+      <span class="badge badge-topic">Governance</span>
+    </div>
+    <div class="pub-authors">Marques Soares, C.D.J. &amp; Paixao Casaca, A.C.</div>
+    <div class="pub-desc">Assesses Brazilian Port Authorities' management from 1993 to 2020, tracing the evolution from public service management to a landlord model inspired by Australian and UK governance frameworks.</div>
+    <a class="pub-link" href="https://www.emerald.com/insight/content/doi/10.1108/mabr-03-2021-0026/full/html" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Emerald
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 14</div>
+    <div class="pub-title">Measuring Environmental Efficiency of Ports Under Undesirable Outputs and Uncertainty</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">Logistics (MDPI)</span>
+      <span class="badge badge-topic">Efficiency / Environment</span>
+    </div>
+    <div class="pub-authors">Sonkariya, A. &amp; Awasthi, A.</div>
+    <div class="pub-desc">Analyses environmental efficiency of Brazilian ports using components such as waste segregation, recycling rates, and emissions, incorporating uncertainty into the DEA framework.</div>
+    <a class="pub-link" href="https://doi.org/10.3390/logistics10010019" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on MDPI
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 15</div>
+    <div class="pub-title">Port Choice in Brazil: A Qualitative Research Related to In-Depth Interviews</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2021</span>
+      <span class="badge badge-journal">Journal of Shipping and Trade (Springer)</span>
+      <span class="badge badge-topic">Logistics / Competitiveness</span>
+    </div>
+    <div class="pub-authors">Souza, F.L.U., Pitombo, C.S. &amp; Yang, D.</div>
+    <div class="pub-desc">Qualitative study identifying key factors influencing port choice in Brazil: hinterland transport connections, port location, berth availability, costs, and physical infrastructure.</div>
+    <a class="pub-link" href="https://jshippingandtrade.springeropen.com/articles/10.1186/s41072-021-00094-2" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Springer
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">ARTICLE 16</div>
+    <div class="pub-title">Smart Port-Hinterland Integration: Conceptual Proposal and Simulation-Based Analysis in Brazilian Ports</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2019</span>
+      <span class="badge badge-journal">ResearchGate</span>
+      <span class="badge badge-topic">Digitalisation / Logistics</span>
+    </div>
+    <div class="pub-authors">Frazzon, E.M., Constante, J.M., Triska, Y., Albuquerque, J.V.S., Martinez-Moya, J., Silva, L.S. &amp; Valente, A.M.</div>
+    <div class="pub-desc">Proposes a smart port-hinterland integration framework that enables vehicle flow visibility and synchronisation, improving efficiency and reliability of port-hinterland connections in Brazil.</div>
+    <a class="pub-link" href="https://www.researchgate.net/publication/335938743_Smart_port-hinterland_integration_conceptual_proposal_and_simulation-based_analysis_in_Brazilian_ports" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ResearchGate
+    </a>
+  </div>
+
+  <div class="section-label">Policy &amp; Industry Reports</div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 01</div>
+    <div class="pub-title">The Potential of Brazilian Ports as Renewable Marine Fuel Bunkering Hubs</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">May 2025</span>
+      <span class="badge badge-journal">ICCT</span>
+      <span class="badge badge-topic">Decarbonisation / Fuels</span>
+    </div>
+    <div class="pub-authors">International Council on Clean Transportation (ICCT) &amp; Brazilian Ministry of Ports and Airports</div>
+    <div class="pub-desc">Assesses Brazilian ports' potential as bunkering hubs for renewable hydrogen, ammonia, and methanol. Produced in partnership with Brazil's Ministry of Ports and Airports.</div>
+    <a class="pub-link" href="https://theicct.org/publication/the-potential-of-brazilian-ports-as-renewable-marine-fuel-bunkering-hubs-june25/" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ICCT
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 02</div>
+    <div class="pub-title">Guide for Decarbonization of the Maritime and Port Sector</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">Sep 2024</span>
+      <span class="badge badge-journal">UN Global Compact Brazil</span>
+      <span class="badge badge-topic">Decarbonisation</span>
+    </div>
+    <div class="pub-authors">UN Global Compact Brazil Network, Ocean Business Working Group</div>
+    <div class="pub-desc">First sectoral guide for maritime and port decarbonisation in Brazil. Launched at the United Nations in New York as part of COP30 preparation.</div>
+    <a class="pub-link" href="https://cop30.pactoglobal.org.br/index.php/en/2025/05/29/guide-for-decarbonization-of-the-maritime-and-port-sector-launched-at-un-global-compact-brazil-network-event-in-new-york/" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on COP30 / Pacto Global
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 03</div>
+    <div class="pub-title">Greener Shores: Brazil's $100 Billion Decarbonization Opportunity</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">McKinsey</span>
+      <span class="badge badge-topic">Decarbonisation / Economics</span>
+    </div>
+    <div class="pub-authors">McKinsey &amp; Company</div>
+    <div class="pub-desc">Estimates a US$100 billion decarbonisation opportunity for the Brazilian maritime and port sector. Analyses routes, fuels, and infrastructure requirements.</div>
+    <a class="pub-link" href="https://www.mckinsey.com/capabilities/sustainability/our-insights/greener-shores-brazils-100-billion-decarbonization-opportunity" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on McKinsey
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 04</div>
+    <div class="pub-title">Five Brazilian Ports Lead in Decarbonization Drive</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">Maritime Executive</span>
+      <span class="badge badge-topic">Decarbonisation</span>
+    </div>
+    <div class="pub-authors">The Maritime Executive</div>
+    <div class="pub-desc">Coverage of the 5 leading Brazilian ports in decarbonisation: solar energy, equipment electrification, and biofuel strategies.</div>
+    <a class="pub-link" href="https://maritime-executive.com/article/five-brazilian-ports-lead-in-decarbonization-drive" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Maritime Executive
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 05</div>
+    <div class="pub-title">Brazil Charts a Course for a Clean Maritime Future</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">Aug 2024</span>
+      <span class="badge badge-journal">ICCT</span>
+      <span class="badge badge-topic">Policy / Fuels</span>
+    </div>
+    <div class="pub-authors">International Council on Clean Transportation (ICCT)</div>
+    <div class="pub-desc">Seminar with government and private sector. Analysis of the clean fuels roadmap for Brazilian shipping ahead of COP30.</div>
+    <a class="pub-link" href="https://theicct.org/brazil-charts-a-course-for-a-clean-maritime-future-with-a-pivotal-seminar-aug24/" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on ICCT
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 06</div>
+    <div class="pub-title">Brazil's Ports: Navigating Growth and Gridlock in 2025</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">Freyt World</span>
+      <span class="badge badge-topic">Operations / Logistics</span>
+    </div>
+    <div class="pub-authors">Freyt World</div>
+    <div class="pub-desc">Operational and logistics analysis of major Brazilian ports in 2025. Infrastructure bottlenecks and cargo growth outlook.</div>
+    <a class="pub-link" href="https://www.freytworld.com/news/brazils-ports-navigating-growth-and-gridlock-in-2025/" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Freyt World
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 07</div>
+    <div class="pub-title">Decarbonization Alternatives for the Maritime Transport Sector in Brazil</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">CEBRI</span>
+      <span class="badge badge-topic">Decarbonisation / Policy</span>
+    </div>
+    <div class="pub-authors">CEBRI (Brazilian Centre for International Relations)</div>
+    <div class="pub-desc">Policy paper by the Brazilian Centre for International Relations examining alternative pathways for decarbonising Brazil's maritime transport sector, including fuel switching and operational efficiency.</div>
+    <a class="pub-link" href="https://cebri.org/en/doc/359/decarbonization-alternatives-for-the-maritime-transport-sector-in-brazil-2024" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on CEBRI
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 08</div>
+    <div class="pub-title">White Paper: The Future of Port Hubs in Brazil</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">Nov 2024</span>
+      <span class="badge badge-journal">APM Terminals</span>
+      <span class="badge badge-topic">Infrastructure / Trade</span>
+    </div>
+    <div class="pub-authors">APM Terminals, A&amp;M Infra &amp; Navarro Prado Advogados</div>
+    <div class="pub-desc">Estimates how hub ports could positively impact costs and competitiveness of Brazilian foreign trade. Analyses consolidation of hub port operations and its implications for the supply chain.</div>
+    <a class="pub-link" href="https://www.apmterminals.com/en/news/news-releases/2024/241127-white-paper-port-hubs-brazil" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on APM Terminals
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 09</div>
+    <div class="pub-title">Brazil Unveils Investment Plan for Port Privatization</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">Maritime Executive</span>
+      <span class="badge badge-topic">Privatisation / Investment</span>
+    </div>
+    <div class="pub-authors">The Maritime Executive</div>
+    <div class="pub-desc">Covers Brazil's plan for 55 port sector auctions during 2023-2026, including Santos channel concession and terminal leases, with investment targets of up to R$8 billion.</div>
+    <a class="pub-link" href="https://www.maritime-executive.com/article/brazil-unveils-investment-plan-for-port-privatization" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on Maritime Executive
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 10</div>
+    <div class="pub-title">Why Modernizing Ports Is Critical for Climate, Ocean, and Human Health</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2024</span>
+      <span class="badge badge-journal">World Resources Institute</span>
+      <span class="badge badge-topic">Climate / Health</span>
+    </div>
+    <div class="pub-authors">World Resources Institute (WRI)</div>
+    <div class="pub-desc">Global analysis of why port modernisation is an untapped opportunity for healthier oceans and communities, with implications for emerging economies including Brazil.</div>
+    <a class="pub-link" href="https://www.wri.org/insights/modernizing-ports-major-untapped-opportunity-healthier-planet" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read on WRI
+    </a>
+  </div>
+
+  <div class="pub-card">
+    <div class="pub-num">REPORT 11</div>
+    <div class="pub-title">Assessing the Economic Effects of Port Efficiency in Brazil</div>
+    <div class="pub-meta">
+      <span class="badge badge-year">2025</span>
+      <span class="badge badge-journal">ANPEC</span>
+      <span class="badge badge-topic">Economics / Efficiency</span>
+    </div>
+    <div class="pub-authors">ANPEC (National Association of Graduate Centres in Economics)</div>
+    <div class="pub-desc">Quantitative assessment of the economic effects of port efficiency improvements on Brazilian trade, presented at Brazil's National Association of Graduate Centres in Economics.</div>
+    <a class="pub-link" href="https://www.anpec.org.br/encontro/2025/submissao/files_I/i10-44285f7025017e9fabf602aaf15a6878.pdf" target="_blank">
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Read PDF on ANPEC
+    </a>
+  </div>
+
+</div>
 
 <footer>
   &copy; 2026 Brazil Port Data &middot; All rights reserved &middot;
-  <a href="https://www.darlianecunha.com" target="_blank">Prof. Dr. Darliane Cunha</a>
+  <a href="https://www.darlianecunha.com" target="_blank">Darliane Cunha, PhD</a>
 </footer>
 
 </body>
