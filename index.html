@@ -6,7 +6,7 @@
 <title>Brazil Port Data · Port Analytics, Emissions &amp; SDG Research</title>
 <meta name="description" content="Structured data, dashboards and sustainability analytics on Brazilian ports (ANTAQ 2010-2025) and European shipping (EU MRV, Eurostat, Sentinel-5P). Led by Darliane Cunha, PhD.">
 <link rel="canonical" href="https://www.brazilportdata.com/">
-<meta name="theme-color" content="#0c4a6e">
+<meta name="theme-color" content="#0B2239">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.brazilportdata.com/">
@@ -54,258 +54,246 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  :root { --ocean: #0c4a6e; --teal: #0891b2; --bg: #e8eaed; }
-  body { font-family: 'Roboto', sans-serif; background: var(--bg); color: #1a1a2e; overflow-x: hidden; }
+  :root {
+    --deep: #0B2239;      /* Deep Sea · institutional */
+    --deep2: #14486a;
+    --teal: #0FB5BA;      /* Signal Teal · accent */
+    --teal-dk: #0A8F93;   /* hover / subtitle */
+    --sun: #F0A500;       /* alert */
+    --pos: #2FA36B;       /* gains */
+    --pos-lt: #6ee7b7;    /* gains on dark */
+    --neg: #D6584F;       /* drops / risk */
+    --neg-lt: #fca5a5;
+    --bg: #F5F8FA;        /* page */
+    --ink: #13343B;       /* body ink */
+    --muted: #5f7480;
+    --line: #dbe4e8;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Roboto', sans-serif; font-size: 16px; background: var(--bg); color: var(--ink); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
   .wrap { max-width: 1260px; margin: 0 auto; padding: 0 24px; }
 
   /* ═══ HEADER ═══ */
   header {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(255,255,255,0.92); backdrop-filter: blur(14px);
-    border-bottom: 1px solid #e0e0e0; padding: 14px 0;
+    background: rgba(245,248,250,0.9); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line); padding: 14px 0;
   }
   .hdr { display: flex; align-items: center; gap: 14px; }
   .logo {
     width: 44px; height: 44px;
-    background: linear-gradient(135deg, #0c4a6e, #0891b2);
+    background: linear-gradient(135deg, #0B2239, #0FB5BA);
     border-radius: 10px; display: flex; align-items: center; justify-content: center;
     font-size: 20px; color: white; font-weight: 800; font-family: 'Sora';
   }
-  .hdr-title { font-family: 'Sora'; font-size: 1.15rem; font-weight: 700; color: var(--ocean); }
-  .hdr-sub { font-size: 0.68rem; color: #94a3b8; letter-spacing: 1px; }
+  .hdr-title { font-family: 'Sora'; font-size: 1.15rem; font-weight: 700; color: var(--deep); }
+  .hdr-sub { font-size: 0.68rem; color: #8aa0ab; letter-spacing: 1px; }
   .hdr-nav { margin-left: auto; display: flex; gap: 4px; }
   .hdr-nav a {
-    font-size: 0.76rem; font-weight: 500; color: #64748b;
-    text-decoration: none; padding: 6px 12px; border-radius: 6px; transition: all 0.2s;
+    font-size: 0.8rem; font-weight: 500; color: var(--muted);
+    text-decoration: none; padding: 7px 13px; border-radius: 6px; transition: all 0.2s;
   }
-  .hdr-nav a:hover { background: #f1f5f9; color: var(--ocean); }
+  .hdr-nav a:hover { background: #eaf1f4; color: var(--deep); }
 
   /* ═══ HERO ═══ */
-  .hero { padding: 48px 0 16px; }
+  .hero { padding: 52px 0 20px; }
   .hero h1 {
-    font-family: 'Sora'; font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 800; color: var(--ocean); line-height: 1.12; margin-bottom: 10px;
+    font-family: 'Sora'; font-size: clamp(1.9rem, 4vw, 2.9rem);
+    font-weight: 800; color: var(--deep); line-height: 1.12; margin-bottom: 12px;
   }
-  .hero p { font-size: 1rem; color: #64748b; max-width: 640px; line-height: 1.6; }
+  .hero p { font-size: 1.05rem; color: var(--muted); max-width: 660px; line-height: 1.65; }
 
   /* ═══ SECTION LABEL ═══ */
   .slbl {
-    font-family: 'Sora'; font-size: 0.7rem; text-transform: uppercase;
-    letter-spacing: 3px; color: #94a3b8; margin-bottom: 20px;
+    font-family: 'Sora'; font-size: 0.72rem; text-transform: uppercase;
+    letter-spacing: 3px; color: #8aa0ab; margin-bottom: 22px;
     display: flex; align-items: center; gap: 12px;
   }
-  .slbl::after { content: ''; flex: 1; height: 1px; background: #d0d5dd; }
+  .slbl::after { content: ''; flex: 1; height: 1px; background: #cdd8de; }
 
-  /* ═══ CONTAINER YARD - BENTO GRID ═══ */
-  .yard { padding-bottom: 48px; }
+  /* ═══ CONTAINER YARD · ALIGNED BENTO ═══ */
+  .yard { padding-bottom: 52px; }
   .bento {
     display: grid;
     grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(40px, auto);
-    gap: 14px;
+    grid-auto-rows: 1fr;
+    gap: 16px;
   }
+  .sc { grid-column: span 4; }
+  .sc.wide { grid-column: span 8; }
 
-  /* Irregular placement */
-  .sc:nth-child(1) { grid-column: 1 / 8;   grid-row: 1 / 6; }    /* SDG - wide left */
-  .sc:nth-child(2) { grid-column: 8 / 13;  grid-row: 1 / 8; }    /* Top20 - tall right */
-  .sc:nth-child(3) { grid-column: 1 / 5;   grid-row: 6 / 12; }   /* Cargo - narrow left */
-  .sc:nth-child(4) { grid-column: 5 / 8;   grid-row: 6 / 10; }   /* Resources - small center */
-  .sc:nth-child(5) { grid-column: 5 / 9;   grid-row: 10 / 15; }  /* CO2 Calculator - standalone */
-  .sc:nth-child(6) { grid-column: 9 / 13;  grid-row: 8 / 15; }   /* European Observatory - right bottom */
-  .sc:nth-child(7) { grid-column: 1 / 8;   grid-row: 15 / 20; }  /* Publications - wide bottom */
-  .sc:nth-child(8) { grid-column: 8 / 13;  grid-row: 15 / 20; }  /* Vessel Call Intelligence - bottom right */
-
-  /* Container shift offsets for irregularity */
-  .sc:nth-child(1) { transform: rotate(-0.4deg); }
-  .sc:nth-child(2) { transform: rotate(0.3deg) translateY(6px); }
-  .sc:nth-child(3) { transform: rotate(0.5deg) translateX(3px); }
-  .sc:nth-child(4) { transform: rotate(-0.6deg) translateY(-4px); }
-  .sc:nth-child(5) { transform: rotate(0.25deg) translateX(-5px); }
-  .sc:nth-child(6) { transform: rotate(-0.35deg) translateY(3px); }
-  .sc:nth-child(7) { transform: rotate(0.3deg) translateX(4px); }
-  .sc:nth-child(8) { transform: rotate(-0.3deg) translateY(2px); }
-
-  /* ═══ 3D CONTAINER ═══ */
+  /* ═══ CONTAINER CARD ═══ */
   .sc {
     position: relative;
-    transition: transform 0.45s cubic-bezier(0.23,1,0.32,1), box-shadow 0.45s ease;
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
     animation: fadeIn 0.6s ease forwards;
     opacity: 0;
   }
-  .sc:hover { transform: rotate(0deg) translateY(-3px) scale(1.008) !important; z-index: 10; }
+  .sc:hover { transform: translateY(-4px); z-index: 10; }
+  .sc:hover .cb { box-shadow: 0 20px 46px rgba(11,34,57,0.28), 0 4px 12px rgba(11,34,57,0.14); }
 
   .cb {
-    position: relative; border-radius: 5px; overflow: hidden; height: 100%;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.15), 0 3px 10px rgba(0,0,0,0.08),
-      inset 0 1px 0 rgba(255,255,255,0.12);
+    position: relative; border-radius: 8px; overflow: hidden; height: 100%;
+    box-shadow: 0 10px 30px rgba(11,34,57,0.16), 0 2px 8px rgba(11,34,57,0.08);
+    transition: box-shadow 0.4s ease;
   }
-  /* corrugation */
+  /* subtle corrugation */
   .cb::before {
     content: ''; position: absolute; inset: 0;
-    background: repeating-linear-gradient(90deg, transparent 0px, transparent 46px, rgba(0,0,0,0.05) 46px, rgba(0,0,0,0.05) 48px);
+    background: repeating-linear-gradient(90deg, transparent 0px, transparent 47px, rgba(0,0,0,0.035) 47px, rgba(0,0,0,0.035) 48px);
     pointer-events: none; z-index: 1;
   }
   /* light reflection */
   .cb::after {
-    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%;
-    background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, transparent 100%);
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 42%;
+    background: linear-gradient(180deg, rgba(255,255,255,0.09) 0%, transparent 100%);
     pointer-events: none; z-index: 2;
   }
 
   /* corner fittings */
-  .cf { position: absolute; width: 14px; height: 14px; border: 2.5px solid rgba(255,255,255,0.20); border-radius: 2px; z-index: 3; }
-  .cf.tl { top: 6px; left: 6px; border-right: none; border-bottom: none; }
-  .cf.tr { top: 6px; right: 6px; border-left: none; border-bottom: none; }
-  .cf.bl { bottom: 6px; left: 6px; border-right: none; border-top: none; }
-  .cf.br { bottom: 6px; right: 6px; border-left: none; border-top: none; }
+  .cf { position: absolute; width: 13px; height: 13px; border: 2.5px solid rgba(255,255,255,0.18); border-radius: 2px; z-index: 3; }
+  .cf.tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+  .cf.tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+  .cf.bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+  .cf.br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
   .idp {
-    position: absolute; top: 10px; right: 14px;
-    font-family: 'DM Mono'; font-size: 0.58rem; font-weight: 500;
-    letter-spacing: 2px; color: rgba(255,255,255,0.25); z-index: 3;
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'DM Mono'; font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 2px; color: rgba(255,255,255,0.28); z-index: 3;
   }
   .rkb {
-    position: absolute; bottom: 8px; right: 14px;
-    font-family: 'Sora'; font-size: 2.2rem; font-weight: 800;
-    color: rgba(255,255,255,0.05); z-index: 3;
+    position: absolute; bottom: 6px; right: 16px;
+    font-family: 'Sora'; font-size: 2.4rem; font-weight: 800;
+    color: rgba(255,255,255,0.06); z-index: 3;
   }
 
   /* inner content */
   .ci { position: relative; z-index: 3; padding: 28px 26px; color: white; height: 100%; display: flex; flex-direction: column; }
-  .ci h3 { font-family: 'Sora'; font-size: 1.2rem; font-weight: 700; margin-bottom: 2px; }
-  .ci .sub { font-size: 0.72rem; opacity: 0.6; margin-bottom: 8px; }
-  .ci .desc { font-size: 0.82rem; opacity: 0.8; line-height: 1.5; margin-bottom: 16px; }
+  .ci h3 { font-family: 'Sora'; font-size: 1.28rem; font-weight: 700; margin-bottom: 3px; }
+  .ci .sub { font-size: 0.76rem; opacity: 0.68; margin-bottom: 10px; }
+  .ci .desc { font-size: 0.9rem; opacity: 0.86; line-height: 1.55; margin-bottom: 18px; }
+
+  /* status pill */
+  .pill {
+    display: inline-block; font-size: 0.58rem; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 3px 9px; border-radius: 20px; margin-bottom: 12px; font-weight: 600;
+    background: rgba(240,165,0,0.18); border: 1px solid rgba(240,165,0,0.5); color: #ffd98a;
+  }
 
   /* data chips */
-  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
   .chip {
-    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.13);
-    border-radius: 7px; padding: 8px 12px; min-width: 90px;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 8px; padding: 9px 13px; min-width: 92px;
   }
-  .chip-lbl { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.5; }
-  .chip-val { font-family: 'DM Mono'; font-size: 0.92rem; font-weight: 500; margin-top: 2px; }
-  .chip-sub { font-size: 0.58rem; opacity: 0.45; margin-top: 1px; }
+  .chip-lbl { font-size: 0.56rem; text-transform: uppercase; letter-spacing: 1px; opacity: 0.55; }
+  .chip-val { font-family: 'DM Mono'; font-size: 0.95rem; font-weight: 500; margin-top: 2px; }
+  .chip-sub { font-size: 0.6rem; opacity: 0.5; margin-top: 1px; }
 
   /* mini table */
-  .mtbl { width: 100%; border-collapse: collapse; margin-bottom: 12px; }
+  .mtbl { width: 100%; border-collapse: collapse; margin-bottom: 14px; }
   .mtbl th {
-    text-align: left; font-size: 0.55rem; text-transform: uppercase; letter-spacing: 1px;
-    opacity: 0.45; padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.12);
+    text-align: left; font-size: 0.56rem; text-transform: uppercase; letter-spacing: 1px;
+    opacity: 0.5; padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.14);
   }
   .mtbl th:last-child, .mtbl td:last-child { text-align: right; }
   .mtbl td {
-    font-size: 0.76rem; padding: 5px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 0.8rem; padding: 6px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
   }
-  .mtbl td:last-child { font-family: 'DM Mono'; font-size: 0.72rem; }
+  .mtbl td:last-child { font-family: 'DM Mono'; font-size: 0.75rem; }
 
   /* mini bars */
-  .mbars { display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+  .mbars { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
   .mbar { display: flex; align-items: center; gap: 8px; }
-  .mbar-lbl { font-size: 0.7rem; width: 85px; flex-shrink: 0; opacity: 0.8; }
-  .mbar-track { flex: 1; height: 16px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; }
-  .mbar-fill { height: 100%; border-radius: 4px; background: rgba(255,255,255,0.32); display: flex; align-items: center; justify-content: flex-end; padding-right: 5px; }
-  .mbar-val { font-family: 'DM Mono'; font-size: 0.58rem; white-space: nowrap; }
+  .mbar-lbl { font-size: 0.74rem; width: 88px; flex-shrink: 0; opacity: 0.85; }
+  .mbar-track { flex: 1; height: 17px; background: rgba(255,255,255,0.09); border-radius: 4px; overflow: hidden; }
+  .mbar-fill { height: 100%; border-radius: 4px; background: rgba(255,255,255,0.34); display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; }
+  .mbar-val { font-family: 'DM Mono'; font-size: 0.6rem; white-space: nowrap; }
 
   /* CTA */
   .cta {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 10px 18px; background: rgba(255,255,255,0.13);
-    border: 1.5px solid rgba(255,255,255,0.22); border-radius: 8px;
-    color: white; text-decoration: none; font-weight: 600; font-size: 0.8rem;
+    padding: 10px 18px; background: rgba(255,255,255,0.14);
+    border: 1.5px solid rgba(255,255,255,0.24); border-radius: 8px;
+    color: white; text-decoration: none; font-weight: 600; font-size: 0.82rem;
     transition: all 0.25s;
   }
-  .cta:hover { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.35); }
+  .cta:hover { background: rgba(255,255,255,0.24); border-color: rgba(255,255,255,0.4); }
   .cta-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
 
   /* ═══ CONTACT CTA ═══ */
   .contact-cta {
-    background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 100%);
-    padding: 52px 0; text-align: center;
+    background: linear-gradient(135deg, #0B2239 0%, #0A8F93 100%);
+    padding: 56px 0; text-align: center;
   }
   .contact-cta h2 {
-    font-family: 'Sora'; font-size: clamp(1.3rem, 3vw, 1.8rem);
+    font-family: 'Sora'; font-size: clamp(1.35rem, 3vw, 1.85rem);
     font-weight: 700; color: white; margin-bottom: 10px;
   }
   .contact-cta p {
-    color: rgba(255,255,255,0.6); font-size: 0.95rem;
-    max-width: 520px; margin: 0 auto 24px; line-height: 1.6;
+    color: rgba(255,255,255,0.7); font-size: 1rem;
+    max-width: 540px; margin: 0 auto 24px; line-height: 1.6;
   }
   .contact-btns { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
   .contact-btn {
     display: inline-flex; align-items: center; gap: 10px;
     padding: 13px 26px; border-radius: 10px; font-weight: 600;
-    font-size: 0.88rem; text-decoration: none; transition: all 0.25s;
+    font-size: 0.9rem; text-decoration: none; transition: all 0.25s;
   }
-  .contact-btn.primary { background: white; color: var(--ocean); }
-  .contact-btn.primary:hover { background: #f0f9ff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+  .contact-btn.primary { background: white; color: var(--deep); }
+  .contact-btn.primary:hover { background: #eef7f8; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.18); }
   .contact-btn.secondary {
     background: rgba(255,255,255,0.12); color: white;
-    border: 1.5px solid rgba(255,255,255,0.25);
+    border: 1.5px solid rgba(255,255,255,0.28);
   }
   .contact-btn.secondary:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
   .contact-icon { width: 20px; height: 20px; display: inline-block; }
 
   /* ═══ ABOUT ═══ */
-  .about { padding: 56px 0; border-top: 1px solid #e0e0e0; }
-  .about h2 { font-family: 'Sora'; font-size: 1.6rem; font-weight: 700; color: var(--ocean); margin-bottom: 12px; }
-  .about p { color: #64748b; line-height: 1.7; max-width: 720px; margin-bottom: 12px; }
-  .about a { color: var(--teal); text-decoration: none; font-weight: 500; }
+  .about { padding: 60px 0; border-top: 1px solid var(--line); }
+  .about h2 { font-family: 'Sora'; font-size: 1.6rem; font-weight: 700; color: var(--deep); margin-bottom: 12px; }
+  .about p { color: var(--muted); line-height: 1.75; max-width: 730px; margin-bottom: 12px; font-size: 1rem; }
+  .about a { color: var(--teal-dk); text-decoration: none; font-weight: 500; }
   .about a:hover { text-decoration: underline; }
 
   /* ═══ FOOTER ═══ */
-  footer { background: var(--ocean); color: rgba(255,255,255,0.5); text-align: center; padding: 28px; font-size: 0.82rem; }
-  footer a { color: rgba(255,255,255,0.7); text-decoration: none; }
+  footer { background: var(--deep); color: rgba(255,255,255,0.55); text-align: center; padding: 30px; font-size: 0.85rem; }
+  footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
   footer a:hover { color: white; }
-
-  /* ═══ GROUND MARKINGS (yard lines) ═══ */
-  .yard-ground {
-    position: relative;
-  }
-  .yard-ground::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 50%;
-    width: 3px; height: 100%;
-    background: repeating-linear-gradient(180deg, #d0d5dd 0px, #d0d5dd 12px, transparent 12px, transparent 24px);
-    opacity: 0.5;
-    z-index: 0;
-  }
 
   /* ═══ ANIMATIONS ═══ */
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(18px); }
+    to { opacity: 1; transform: translateY(0); }
   }
-  .sc:nth-child(1) { animation-delay: 0.05s; }
-  .sc:nth-child(2) { animation-delay: 0.12s; }
-  .sc:nth-child(3) { animation-delay: 0.20s; }
-  .sc:nth-child(4) { animation-delay: 0.28s; }
-  .sc:nth-child(5) { animation-delay: 0.36s; }
-  .sc:nth-child(6) { animation-delay: 0.44s; }
-  .sc:nth-child(7) { animation-delay: 0.52s; }
-  .sc:nth-child(8) { animation-delay: 0.60s; }
+  .sc:nth-child(1) { animation-delay: 0.04s; }
+  .sc:nth-child(2) { animation-delay: 0.10s; }
+  .sc:nth-child(3) { animation-delay: 0.16s; }
+  .sc:nth-child(4) { animation-delay: 0.22s; }
+  .sc:nth-child(5) { animation-delay: 0.28s; }
+  .sc:nth-child(6) { animation-delay: 0.34s; }
+  .sc:nth-child(7) { animation-delay: 0.40s; }
+  .sc:nth-child(8) { animation-delay: 0.46s; }
+  .sc:nth-child(9) { animation-delay: 0.52s; }
 
   /* ═══ RESPONSIVE ═══ */
-  @media (max-width: 900px) {
-    .bento {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto;
-    }
-    .sc:nth-child(1), .sc:nth-child(2), .sc:nth-child(3),
-    .sc:nth-child(4), .sc:nth-child(5), .sc:nth-child(6),
-    .sc:nth-child(7), .sc:nth-child(8) {
-      grid-column: 1 / -1 !important;
-      grid-row: auto !important;
-      transform: none !important;
-    }
-    .sc:hover { transform: translateY(-3px) !important; }
-    .ci { padding: 22px 18px; }
-    .chips { gap: 5px; }
-    .chip { min-width: 80px; padding: 7px 10px; }
+  @media (max-width: 980px) {
+    .bento { grid-template-columns: repeat(6, 1fr); grid-auto-rows: auto; }
+    .sc, .sc.wide { grid-column: span 3; }
+  }
+  @media (max-width: 720px) {
+    .bento { grid-template-columns: 1fr; }
+    .sc, .sc.wide { grid-column: 1 / -1; }
+    .ci { padding: 24px 20px; }
+    .chip { min-width: 84px; padding: 8px 11px; }
     .hdr-nav { display: none; }
-    .mbar-lbl { width: 65px; font-size: 0.64rem; }
+    .mbar-lbl { width: 70px; font-size: 0.68rem; }
     .contact-btns { flex-direction: column; align-items: center; }
-    .yard-ground::before { display: none; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sc { animation: none; opacity: 1; }
+    html { scroll-behavior: auto; }
   }
 </style>
 </head>
@@ -333,11 +321,11 @@
 
 <section class="wrap yard" id="yard">
   <div class="slbl">Container Yard &middot; Select a Project</div>
-  <div class="bento yard-ground">
+  <div class="bento">
 
-    <!-- ═══ CONTAINER 01: SDG PORT HUB (wide left) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #0e7490 0%, #0c4a6e 100%)">
+    <!-- ═══ 01 · SDG PORT HUB (wide) ═══ -->
+    <div class="sc wide">
+      <div class="cb" style="background: linear-gradient(160deg, #1f8a5b 0%, #0B2239 90%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">01</div>
         <div class="idp">SDGP-001</div>
@@ -360,30 +348,30 @@
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://sdg-port-hub-sable.vercel.app/" target="_blank" class="cta">Visit SDG Port Hub &rarr;</a>
+            <a href="https://sdg-port-hub-sable.vercel.app/" target="_blank" rel="noopener" class="cta">Visit SDG Port Hub &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 02: TOP 20 PORTS (tall right) ═══ -->
+    <!-- ═══ 02 · PORTS & TERMINALS EXPLORER (brazilport20) ═══ -->
     <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #dc2626 0%, #991b1b 100%)">
+      <div class="cb" style="background: linear-gradient(160deg, #dc2626 0%, #7f1d1d 92%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">02</div>
-        <div class="idp">TOP20-002</div>
+        <div class="idp">PORT-002</div>
         <div class="ci">
-          <h3>Top 20 Ports &amp; Terminals</h3>
-          <div class="sub">Cargo Dashboard &middot; 2021-2025 &middot; ANTAQ</div>
-          <div class="desc">Individual profiles for Brazil's 20 largest ports ranked by cargo volume.</div>
+          <h3>Ports &amp; Terminals Explorer</h3>
+          <div class="sub">211 Facilities &middot; Top 20 Profiles &middot; ANTAQ 2021-2025</div>
+          <div class="desc">Cargo overview for all 211 Brazilian ports and terminals, with detailed year-by-year dashboards for the 20 largest facilities by volume.</div>
           <div class="chips">
             <div class="chip">
-              <div class="chip-lbl">Combined 2025</div>
-              <div class="chip-val">908.5M t</div>
+              <div class="chip-lbl">Facilities</div>
+              <div class="chip-val">211</div>
             </div>
             <div class="chip">
-              <div class="chip-lbl">#1 Volume</div>
-              <div class="chip-val">Ponta da Madeira</div>
+              <div class="chip-lbl">Top 20 · 2025</div>
+              <div class="chip-val">908.5M t</div>
             </div>
           </div>
           <table class="mtbl">
@@ -397,56 +385,56 @@
             </tbody>
           </table>
           <div class="cta-row">
-            <a href="https://brazilport20.vercel.app/" target="_blank" class="cta">Open Dashboard &rarr;</a>
+            <a href="https://brazilport20.vercel.app/" target="_blank" rel="noopener" class="cta">Open Dashboard &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 03: CARGO MOVEMENT (narrow left) ═══ -->
+    <!-- ═══ 03 · CARGO MOVEMENT (PortFlow) ═══ -->
     <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #1d4ed8 0%, #0c2340 100%)">
+      <div class="cb" style="background: linear-gradient(160deg, #0FB5BA 0%, #0B2239 90%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">03</div>
-        <div class="idp">MOVP-003</div>
+        <div class="idp">FLOW-003</div>
         <div class="ci">
-          <h3>Cargo Movement</h3>
-          <div class="sub">ANTAQ 2010-2024 &middot; All Ports</div>
-          <div class="desc">15 years of Brazilian port cargo data. Filters by year, facility, cargo profile, direction, navigation, and state.</div>
+          <h3>Cargo Movement &amp; Trade</h3>
+          <div class="sub">PortFlow Brasil &middot; ANTAQ 2010-2025</div>
+          <div class="desc">16 years of Brazilian port cargo with trade-partner intelligence: exports vs imports, top destination and origin countries, cabotage and inland waterway trends.</div>
           <div class="chips">
             <div class="chip">
-              <div class="chip-lbl">Total 2024</div>
-              <div class="chip-val">1.21B t</div>
+              <div class="chip-lbl">Total 2025</div>
+              <div class="chip-val">1,405.1M t</div>
             </div>
             <div class="chip">
-              <div class="chip-lbl">vs 2023</div>
-              <div class="chip-val" style="color: #fca5a5">-7.2%</div>
+              <div class="chip-lbl">vs 2024</div>
+              <div class="chip-val" style="color: var(--pos-lt)">+16.1%</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Top partner</div>
+              <div class="chip-val">China</div>
             </div>
           </div>
           <div class="mbars">
             <div class="mbar">
-              <div class="mbar-lbl">Dry Bulk</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 60%"><span class="mbar-val">727M t</span></div></div>
+              <div class="mbar-lbl">Exports</div>
+              <div class="mbar-track"><div class="mbar-fill" style="width: 67%"><span class="mbar-val">948.2M t</span></div></div>
             </div>
             <div class="mbar">
-              <div class="mbar-lbl">Liquid</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 24%"><span class="mbar-val">287M t</span></div></div>
-            </div>
-            <div class="mbar">
-              <div class="mbar-lbl">Container</div>
-              <div class="mbar-track"><div class="mbar-fill" style="width: 11%"><span class="mbar-val">138M t</span></div></div>
+              <div class="mbar-lbl">Imports</div>
+              <div class="mbar-track"><div class="mbar-fill" style="width: 33%"><span class="mbar-val">456.9M t</span></div></div>
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://portflow-site.vercel.app/" target="_blank" class="cta">Open Dashboard &rarr;</a>
+            <a href="https://portflow-iota.vercel.app/" target="_blank" rel="noopener" class="cta">Open Dashboard &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 04: PORT EMISSIONS (small center) ═══ -->
+    <!-- ═══ 04 · PORT EMISSIONS ═══ -->
     <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #d97706 0%, #92400e 100%)">
+      <div class="cb" style="background: linear-gradient(160deg, #c77d0a 0%, #0B2239 90%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">04</div>
         <div class="idp">EMIS-004</div>
@@ -465,15 +453,15 @@
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://portemissions-itaqui.vercel.app" target="_blank" class="cta">Open Dashboard &rarr;</a>
+            <a href="https://portemissions-itaqui.vercel.app" target="_blank" rel="noopener" class="cta">Open Dashboard &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 05: CO2 CALCULATOR (standalone) ═══ -->
+    <!-- ═══ 05 · CO2 CALCULATOR ═══ -->
     <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #7c3aed 0%, #4c1d95 100%)">
+      <div class="cb" style="background: linear-gradient(160deg, #7c3aed 0%, #3b1568 92%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">05</div>
         <div class="idp">CO2-005</div>
@@ -492,15 +480,15 @@
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://www.decarbport.com" target="_blank" class="cta">Open Calculator &rarr;</a>
+            <a href="https://www.decarbport.com" target="_blank" rel="noopener" class="cta">Open Calculator &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 06: EUROPEAN OBSERVATORY (right bottom) ═══ -->
-    <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #155e75 0%, #0b2239 100%)">
+    <!-- ═══ 06 · EUROPEAN OBSERVATORY (wide) ═══ -->
+    <div class="sc wide">
+      <div class="cb" style="background: linear-gradient(160deg, #155e75 0%, #0B2239 90%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">06</div>
         <div class="idp">EURO-006</div>
@@ -521,22 +509,55 @@
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://shipping-methane-monitor.vercel.app" target="_blank" class="cta">Methane Monitor &rarr;</a>
-            <a href="https://shipping-carbon-costs.vercel.app" target="_blank" class="cta">Carbon Costs &rarr;</a>
-            <a href="https://port-traffic-explorer.vercel.app" target="_blank" class="cta">Port Traffic &rarr;</a>
-            <a href="https://eu-ports-no2.vercel.app" target="_blank" class="cta">NO2 from Space &rarr;</a>
-            <a href="https://vessel-gigantism.vercel.app" target="_blank" class="cta">Vessel Gigantism &rarr;</a>
+            <a href="https://shipping-methane-monitor.vercel.app" target="_blank" rel="noopener" class="cta">Methane Monitor &rarr;</a>
+            <a href="https://shipping-carbon-costs.vercel.app" target="_blank" rel="noopener" class="cta">Carbon Costs &rarr;</a>
+            <a href="https://port-traffic-explorer.vercel.app" target="_blank" rel="noopener" class="cta">Port Traffic &rarr;</a>
+            <a href="https://eu-ports-no2.vercel.app" target="_blank" rel="noopener" class="cta">NO2 from Space &rarr;</a>
+            <a href="https://vessel-gigantism.vercel.app" target="_blank" rel="noopener" class="cta">Vessel Gigantism &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 07: PUBLICATIONS (wide bottom) ═══ -->
+    <!-- ═══ 07 · IMO → DWT LOOKUP (new) ═══ -->
     <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #1e3a5f 0%, #0f1b2d 100%)">
+      <div class="cb" style="background: linear-gradient(160deg, #3f6072 0%, #0B2239 90%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
         <div class="rkb">07</div>
-        <div class="idp">PUBL-007</div>
+        <div class="idp">IMDW-007</div>
+        <div class="ci">
+          <h3>IMO &rarr; DWT Lookup</h3>
+          <div class="sub">Fleet &amp; Tonnage &middot; Vessel Reference Tool</div>
+          <span class="pill">Deploy pending</span>
+          <div class="desc">Upload a spreadsheet of IMO numbers and get deadweight tonnage, vessel name and check-digit validation. All processing runs in the browser; export to Excel or CSV.</div>
+          <div class="chips">
+            <div class="chip">
+              <div class="chip-lbl">Base</div>
+              <div class="chip-val">17,039</div>
+              <div class="chip-sub">vessels</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Check</div>
+              <div class="chip-val">Check-digit</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Export</div>
+              <div class="chip-val">xlsx / csv</div>
+            </div>
+          </div>
+          <div class="cta-row">
+            <a href="https://imo-dwt-lookup.vercel.app/" target="_blank" rel="noopener" class="cta">Open Lookup &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ 08 · PUBLICATIONS (wide) ═══ -->
+    <div class="sc wide">
+      <div class="cb" style="background: linear-gradient(160deg, #14486a 0%, #0B2239 90%)">
+        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
+        <div class="rkb">08</div>
+        <div class="idp">PUBL-008</div>
         <div class="ci">
           <h3>Publications &amp; Reports</h3>
           <div class="sub">English-Language Research &middot; Brazilian Port Sector</div>
@@ -558,18 +579,18 @@
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://publicationsaboutports.vercel.app/" target="_blank" class="cta">Browse Publications &rarr;</a>
+            <a href="https://publicationsaboutports.vercel.app/" target="_blank" rel="noopener" class="cta">Browse Publications &rarr;</a>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ═══ CONTAINER 08: VESSEL CALL INTELLIGENCE (bottom right) ═══ -->
+    <!-- ═══ 09 · VESSEL CALL INTELLIGENCE ═══ -->
     <div class="sc">
-      <div class="cb" style="background: linear-gradient(160deg, #475569 0%, #1e293b 100%)">
+      <div class="cb" style="background: linear-gradient(160deg, #334a5c 0%, #0B2239 90%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">08</div>
-        <div class="idp">VCIN-008</div>
+        <div class="rkb">09</div>
+        <div class="idp">VCIN-009</div>
         <div class="ci">
           <h3>Vessel Call Intelligence</h3>
           <div class="sub">IMO-Based Analytics &middot; 2019-2025</div>
@@ -585,7 +606,7 @@
             </div>
           </div>
           <div class="cta-row">
-            <a href="https://brazil-vessel-call-intelligence.vercel.app/" target="_blank" class="cta">Open Platform &rarr;</a>
+            <a href="https://brazil-vessel-call-intelligence.vercel.app/" target="_blank" rel="noopener" class="cta">Open Platform &rarr;</a>
           </div>
         </div>
       </div>
@@ -597,18 +618,19 @@
 <!-- ═══ ABOUT ═══ -->
 <section class="wrap about" id="about">
   <h2>About</h2>
-  <p>Brazil Port Data is a research platform designed to connect international stakeholders with structured, reliable data on the Brazilian port sector. The platform supports port authorities, investors, and maritime organisations in understanding infrastructure, performance, and sustainability across Brazilian ports.</p>
+  <p>Brazil Port Data is a research platform that connects international stakeholders with structured, reliable data on the Brazilian port sector, now paired with a European maritime observatory. It supports port authorities, investors, and maritime organisations in understanding infrastructure, performance, and sustainability across ports.</p>
 
-  <h2 style="margin-top: 32px;">Leadership</h2>
-  <p><strong>Darliane Cunha, PhD</strong> leads the Brazil Port Data initiative. With a doctorate in Finance and Accounting (Universidad de Zaragoza, Spain), a post-doctorate at Erasmus University Rotterdam, and 20+ years of research in maritime sustainability and port governance, she brings academic rigour and practical expertise to the platform.</p>
-  <p><a href="https://ribeirocunha.com" target="_blank">Learn more about Dr Cunha &rarr;</a></p>
-  <h2 style="margin-top: 32px;">Data Sources</h2>
-  <p style="font-size: 0.88rem;">Official portals used across the platform:
-    <a href="https://aquarela.antaq.gov.br/single/?appid=5944b812-2cbd-4680-a7b6-004d0ce476dc&sheet=05d6dc11-6d7d-4bda-8142-fbd3a0ee3904&theme=classic&opt=currsel%2Cctxmenu" target="_blank">ANTAQ Statistical Portal</a> &middot;
-    <a href="https://aquarela.antaq.gov.br/single/?appid=775bf8ab-83e5-4049-9178-a0b0a94ad88b&sheet=ThLpNXe&opt=currsel%2Cctxmenu" target="_blank">ANTAQ IDA</a> &middot;
-    <a href="https://aquarela.antaq.gov.br/single/?appid=7367309e-6dd4-4b72-bd0c-3998768f72bf&sheet=517b258c-f119-4b2d-80a8-7b536ddbeed2&bookmark=c8125ac7-d193-4683-80aa-fa2f3a2e9712&opt=currsel%2Cctxmenu&select=clearall" target="_blank">ANTAQ Public Ports</a>
+  <h2 style="margin-top: 34px;">Leadership</h2>
+  <p><strong>Darliane Cunha, PhD</strong> leads the Brazil Port Data initiative. She holds a doctorate in Finance and Accounting (Universidad de Zaragoza, Spain) and completed a post-doctorate at Erasmus University Rotterdam, with more than twenty years of research in maritime sustainability and port governance. Her work spans emissions monitoring, SDG implementation, and data analytics for the maritime sector, bridging academic rigour and applied policy insight.</p>
+  <p><a href="https://ribeirocunha.com" target="_blank" rel="noopener">Learn more about Dr Cunha &rarr;</a></p>
+
+  <h2 style="margin-top: 34px;">Data Sources</h2>
+  <p style="font-size: 0.92rem;">Official portals used across the platform:
+    <a href="https://aquarela.antaq.gov.br/single/?appid=5944b812-2cbd-4680-a7b6-004d0ce476dc&sheet=05d6dc11-6d7d-4bda-8142-fbd3a0ee3904&theme=classic&opt=currsel%2Cctxmenu" target="_blank" rel="noopener">ANTAQ Statistical Portal</a> &middot;
+    <a href="https://aquarela.antaq.gov.br/single/?appid=775bf8ab-83e5-4049-9178-a0b0a94ad88b&sheet=ThLpNXe&opt=currsel%2Cctxmenu" target="_blank" rel="noopener">ANTAQ IDA</a> &middot;
+    <a href="https://aquarela.antaq.gov.br/single/?appid=7367309e-6dd4-4b72-bd0c-3998768f72bf&sheet=517b258c-f119-4b2d-80a8-7b536ddbeed2&bookmark=c8125ac7-d193-4683-80aa-fa2f3a2e9712&opt=currsel%2Cctxmenu&select=clearall" target="_blank" rel="noopener">ANTAQ Public Ports</a>
   </p>
-  <p style="margin-top: 10px; font-size: 0.82rem; color: #94a3b8;">ANTAQ / Brazilian Ministry of Ports and Airports &middot; EU MRV (EMSA / THETIS-MRV) &middot; Eurostat &middot; Copernicus Sentinel-5P &middot; UN SDG Framework</p>
+  <p style="margin-top: 10px; font-size: 0.85rem; color: #8aa0ab;">ANTAQ / Brazilian Ministry of Ports and Airports &middot; EU MRV (EMSA / THETIS-MRV) &middot; Eurostat &middot; Copernicus Sentinel-5P &middot; UN SDG Framework</p>
 </section>
 
 <!-- ═══ CONTACT CTA ═══ -->
@@ -616,11 +638,11 @@
   <div class="wrap">
     <h2>Interested in Brazilian Port Data?</h2>
     <p>Whether you represent a port authority, maritime organisation, or research institution, we welcome collaboration and data-sharing partnerships.</p>
-    <p style="color: rgba(255,255,255,0.85); font-size: 1.05rem; font-family: 'DM Mono'; margin-bottom: 20px;">
-      <a href="mailto:darliane@brazilportdata.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.4);">darliane@brazilportdata.com</a>
+    <p style="color: rgba(255,255,255,0.9); font-size: 1.05rem; font-family: 'DM Mono'; margin-bottom: 20px;">
+      <a href="mailto:darliane@brazilportdata.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.45);">darliane@brazilportdata.com</a>
     </p>
     <div class="contact-btns">
-      <a href="https://ribeirocunha.com" target="_blank" class="contact-btn secondary">
+      <a href="https://ribeirocunha.com" target="_blank" rel="noopener" class="contact-btn secondary">
         <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Visit Research Profile
       </a>
@@ -630,7 +652,7 @@
 
 <footer>
   &copy; 2026 Brazil Port Data &middot; All rights reserved &middot;
-  <a href="https://ribeirocunha.com" target="_blank">Darliane Cunha, PhD</a>
+  <a href="https://ribeirocunha.com" target="_blank" rel="noopener">Darliane Cunha, PhD</a>
 </footer>
 
 </body>
