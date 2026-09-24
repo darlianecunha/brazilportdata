@@ -1,47 +1,35 @@
-[brazil-port-data_README.md](https://github.com/user-attachments/files/28936645/brazil-port-data_README.md)
-# brazil-port-data
+# Brazil Port Data
 
-> Documented ETL pipeline and open data product for Brazilian port cargo movement, built from ANTAQ statistics (2010-2024).
+Source of [brazilportdata.com](https://www.brazilportdata.com): a research hub on the Brazilian port sector built on official ANTAQ statistics, extended with a European maritime observatory (EU MRV, Eurostat, Sentinel-5P).
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org)
+## What is in this repository
 
-## Overview
+| Path | Content |
+|---|---|
+| `index.html` | The home page: twelve project cards, the *Brazil at a Glance* strip and the About and Contact sections. Static HTML, no build step. |
+| `data/` | Consolidated ANTAQ datasets (CSV and JSON) that feed the cards and dashboards, with a data dictionary in `data/README.md`. |
+| `CNAME`, `favicon.svg`, `og-image.png` | Domain and site assets. |
 
-`brazil-port-data` consolidates raw ANTAQ port statistics into a clean, analysis-ready dataset and powers the dashboards at [brazilportdata.com](https://brazilportdata.com). It documents the full path from raw public data to interactive visualisation.
+The dashboards linked from the home page live in their own repositories and Vercel projects (PortFlow Brasil, Ports & Terminals Explorer, Brazilian Berthings, Brazil Port Call Monitor, SDG Port Hub, European Maritime Observatory and others).
 
-## Features
+## Data
 
-- Reproducible ETL from ANTAQ open data (2010-2024)
-- Cleaning, harmonisation and validation steps
-- Cargo flow, port and terminal aggregations
-- Ready-to-use CSV/Parquet outputs
-- Example dashboards (Plotly / Streamlit)
-
-## Quick start
-
-```bash
-python -m brazil_port_data.etl --years 2010-2024 --out data/clean/
-```
+All Brazilian figures come from ANTAQ's *Estatístico Aquaviário* (open data, ODbL), extracted from the agency's statistical panel and aggregated with the same definition ANTAQ uses for port movement (authorised cargo operations). Coverage runs from 2010 to February 2026; 2026 rows are partial. See `data/README.md` for file layouts, definitions and the extraction dates.
 
 ```python
 import pandas as pd
-df = pd.read_parquet("data/clean/cargo_movements.parquet")
-df.groupby("port")["tonnes"].sum().sort_values(ascending=False).head()
+df = pd.read_csv("data/cargo_by_installation_2010_2026.csv")
+df[df.ano == 2025].groupby("complexo")["toneladas"].sum().sort_values(ascending=False).head()
 ```
 
-## Repository structure
+## Updating
 
-```
-brazil-port-data/
-├── brazil_port_data/    # ETL pipeline
-├── data/raw/            # source extracts (or download script)
-├── data/clean/          # processed outputs
-├── dashboards/          # Plotly / Streamlit apps
-└── docs/                # data dictionary + sources
-```
+ANTAQ publishes monthly. The home page numbers and the `data/` files are refreshed from the ANTAQ panel; the extraction date is shown on the page and in the data dictionary.
 
-## Data source
+## Licence
 
-ANTAQ (National Waterway Transport Agency) open statistics.
+Code: MIT. Data: derived from ANTAQ open data under the Open Data Commons Open Database License (ODbL); please credit ANTAQ and Brazil Port Data.
 
+## Author
+
+Darliane Cunha, PhD, Federal University of Maranhão (UFMA). darliane@brazilportdata.com

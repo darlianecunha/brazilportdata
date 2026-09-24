@@ -103,6 +103,25 @@
   }
   .hero p { font-size: 1.05rem; color: var(--muted); max-width: 660px; line-height: 1.65; }
 
+  /* ═══ AT A GLANCE ═══ */
+  .glance { padding: 6px 0 36px; }
+  .kpis { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .kpi {
+    background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 16px 14px;
+    border-top: 3px solid var(--teal);
+  }
+  .kpi-lbl { font-size: 0.58rem; text-transform: uppercase; letter-spacing: 1.3px; color: #8aa0ab; }
+  .kpi-val { font-family: 'DM Mono'; font-size: 1.45rem; font-weight: 500; color: var(--deep); margin-top: 6px; line-height: 1.1; }
+  .kpi-val small { font-size: 0.8rem; color: var(--muted); margin-left: 2px; }
+  .kpi-sub { font-size: 0.72rem; color: var(--muted); margin-top: 6px; }
+  .kpi-sub b { color: var(--pos); font-weight: 600; }
+  .kpi-sub .dn { color: var(--neg); font-weight: 600; }
+  .glance-rank { margin-top: 14px; font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+  .glance-rank strong { color: var(--deep); font-weight: 500; font-family: 'DM Mono'; font-size: 0.78rem; }
+  .glance-note { margin-top: 6px; font-size: 0.7rem; color: #8aa0ab; }
+  @media (max-width: 980px) { .kpis { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 720px) { .kpis { grid-template-columns: repeat(2, 1fr); gap: 10px; } .kpi { padding: 13px 12px 12px; } .kpi-val { font-size: 1.2rem; } }
+
   /* ═══ SECTION LABEL ═══ */
   .slbl {
     font-family: 'Sora'; font-size: 0.72rem; text-transform: uppercase;
@@ -319,6 +338,47 @@
   <p>Structured data, analytics, and sustainability insights on Brazilian ports, now extended with a European maritime observatory built on verified EU MRV, Eurostat and satellite data. A research platform connecting international stakeholders to reliable port sector intelligence.</p>
 </section>
 
+<section class="wrap glance" id="glance">
+  <div class="slbl">Brazil at a Glance &middot; ANTAQ 2025</div>
+  <div class="kpis">
+    <div class="kpi">
+      <div class="kpi-lbl">Cargo handled 2025</div>
+      <div class="kpi-val">1,402.7<small>Mt</small></div>
+      <div class="kpi-sub"><b>+6.1%</b> vs 2024 &middot; record year</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">2026 year to date</div>
+      <div class="kpi-val">205.6<small>Mt</small></div>
+      <div class="kpi-sub"><b>+8.1%</b> vs Jan&ndash;Feb 2025</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Containers 2025</div>
+      <div class="kpi-val">15.2<small>M TEU</small></div>
+      <div class="kpi-sub"><b>+9.5%</b> vs 2024 &middot; 163.8 Mt</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Berthings 2025</div>
+      <div class="kpi-val">94,104</div>
+      <div class="kpi-sub"><b>+12.4%</b> vs 2024 &middot; 65% at TUPs</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Top export partner</div>
+      <div class="kpi-val">China</div>
+      <div class="kpi-sub">439.4 Mt &middot; 46% of exports</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-lbl">Largest port complex</div>
+      <div class="kpi-val">Itaqui</div>
+      <div class="kpi-sub">223.7 Mt &middot; Santos 178.7 Mt</div>
+    </div>
+  </div>
+  <div class="glance-rank">
+    Port complexes 2025 (Mt): <strong>Itaqui 223.7</strong> &middot; <strong>Santos 178.7</strong> &middot; <strong>Itagua&iacute; 131.9</strong> &middot; <strong>Vit&oacute;ria 129.3</strong> &middot; <strong>S&atilde;o Jo&atilde;o da Barra (A&ccedil;u) 88.8</strong> &middot; <strong>Angra dos Reis 72.4</strong> &middot; <strong>Paranagu&aacute;&ndash;Antonina 71.0</strong>
+    &nbsp;&nbsp;|&nbsp;&nbsp; Cargo 2025: iron ore 33% &middot; fuels 24% &middot; containers 12% &middot; soybeans 10%
+  </div>
+  <div class="glance-note">Source: ANTAQ, Estat&iacute;stico Aquavi&aacute;rio (authorised cargo operations; complexes group all installations of a port area). Data to February 2026, extracted 24 September 2026. Figures are aggregated by Brazil Port Data.</div>
+</section>
+
 <section class="wrap yard" id="yard">
   <div class="slbl">Container Yard &middot; Select a Project</div>
   <div class="bento">
@@ -362,7 +422,7 @@
         <div class="idp">PORT-002</div>
         <div class="ci">
           <h3>Ports &amp; Terminals Explorer</h3>
-          <div class="sub">211 Facilities &middot; Top 20 Profiles &middot; ANTAQ 2021-2025</div>
+          <div class="sub">211 Facilities &middot; Top 20 Profiles &middot; ANTAQ 2021-2025 &middot; updated Sep 2026</div>
           <div class="desc">Cargo overview for all 211 Brazilian ports and terminals, with detailed year-by-year dashboards for the 20 largest facilities by volume.</div>
           <div class="chips">
             <div class="chip">
@@ -371,7 +431,7 @@
             </div>
             <div class="chip">
               <div class="chip-lbl">Top 20 · 2025</div>
-              <div class="chip-val">908.5M t</div>
+              <div class="chip-val">1,009.6M t</div>
             </div>
           </div>
           <table class="mtbl">
@@ -381,7 +441,7 @@
               <tr><td>2</td><td>Port of Santos</td><td>142.8M t</td></tr>
               <tr><td>3</td><td>Tubarao Terminal</td><td>87.4M t</td></tr>
               <tr><td>4</td><td>Angra dos Reis</td><td>70.4M t</td></tr>
-              <tr><td>5</td><td>Paranagua</td><td>66.4M t</td></tr>
+              <tr><td>5</td><td>Paranagua</td><td>65.2M t</td></tr>
             </tbody>
           </table>
           <div class="cta-row">
@@ -399,7 +459,7 @@
         <div class="idp">FLOW-003</div>
         <div class="ci">
           <h3>Cargo Movement &amp; Trade</h3>
-          <div class="sub">PortFlow Brasil &middot; ANTAQ 2010-2025</div>
+          <div class="sub">PortFlow Brasil &middot; ANTAQ 2010-2025 &middot; updated Sep 2026</div>
           <div class="desc">16 years of Brazilian port cargo with trade-partner intelligence: exports vs imports, top destination and origin countries, cabotage and inland waterway trends.</div>
           <div class="chips">
             <div class="chip">
@@ -591,9 +651,10 @@
         <div class="rkb">09</div>
         <div class="idp">VCIN-009</div>
         <div class="ci">
+          <span class="pill" style="align-self: flex-start; width: fit-content;">Prototype &middot; Pilot ports</span>
           <h3>Vessel Call Intelligence</h3>
-          <div class="sub">IMO-Based Analytics &middot; 2019-2025</div>
-          <div class="desc">Vessel-level analytics for Brazilian ports: fleet profile, vessel search, at-berth CO2 with OPS-avoidable emissions and EU ETS exposure. Validated against verified EU MRV data.</div>
+          <div class="sub">IMO-Matched Sample &middot; Itaguai, Itaqui, Paranagua, Vila do Conde &middot; 2019-2025</div>
+          <div class="desc">Vessel-level analytics for four pilot ports, built on ANTAQ calls matched to an IMO vessel master: fleet profile, vessel search, at-berth CO2 with OPS-avoidable emissions and EU ETS exposure. Figures are indicative; for national coverage of waiting and berth times see the Port Call Monitor (12).</div>
           <div class="chips">
             <div class="chip">
               <div class="chip-lbl">Port Calls</div>
@@ -611,15 +672,60 @@
       </div>
     </div>
 
-    <!-- ═══ 10 · BRAZILIAN BERTHINGS · PORTS vs TERMINALS (full width) ═══ -->
+    <!-- ═══ 10 · PORT HUBS · BRAZIL vs EUROPE (full width) ═══ -->
+    <div class="sc" style="grid-column: 1 / -1;">
+      <div class="cb" style="background: linear-gradient(160deg, #2FA36B 0%, #0B2239 92%)">
+        <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
+        <div class="rkb">10</div>
+        <div class="idp">HUBS-010</div>
+        <div class="ci">
+          <h3>Port Hubs &middot; Brazil vs Europe</h3>
+          <div class="sub">Vessel Calls &amp; Berthings &middot; ANTAQ + Eurostat &middot; 2019-2025</div>
+          <div class="desc">Brazilian ports (ANTAQ berthings) and European ports (Eurostat arrivals) side by side, each kept in its own metric. Regional and national hub rankings, with a like-for-like comparison drawn only where it is valid: indexed growth from a common 2019 = 100 base.</div>
+          <div class="chips">
+            <div class="chip">
+              <div class="chip-lbl">Brazil 2025</div>
+              <div class="chip-val">94,104</div>
+              <div class="chip-sub">berthings, ANTAQ</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Europe</div>
+              <div class="chip-val">26 countries</div>
+              <div class="chip-sub">958 ports, Eurostat</div>
+            </div>
+            <div class="chip">
+              <div class="chip-lbl">Growth 2019-2025</div>
+              <div class="chip-val" style="color: var(--pos-lt)">+44.6% vs -7.0%</div>
+              <div class="chip-sub">Brazil vs Europe, indexed</div>
+            </div>
+          </div>
+          <div class="mbars" style="max-width: 620px;">
+            <div class="mbar">
+              <div class="mbar-lbl">Brazil</div>
+              <div class="mbar-track"><div class="mbar-fill" style="width: 96%; background: rgba(110,231,183,0.5)"><span class="mbar-val">index 144.6 &middot; 2019=100</span></div></div>
+            </div>
+            <div class="mbar">
+              <div class="mbar-lbl">Europe</div>
+              <div class="mbar-track"><div class="mbar-fill" style="width: 62%"><span class="mbar-val">index 93.0 &middot; 2019=100</span></div></div>
+            </div>
+          </div>
+          <div class="cta-row">
+            <a href="https://porthubs.vercel.app/" target="_blank" rel="noopener" class="cta">Open Port Hubs &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ═══ 11 · BRAZILIAN BERTHINGS · PORTS vs TERMINALS (full width) ═══ -->
     <div class="sc" style="grid-column: 1 / -1;">
       <div class="cb" style="background: linear-gradient(160deg, #0FB5BA 0%, #0B2239 92%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">10</div>
-        <div class="idp">BRTH-010</div>
+        <div class="rkb">11</div>
+        <div class="idp">BRTH-011</div>
         <div class="ci">
           <h3>Brazilian Berthings</h3>
-          <div class="sub">Public Ports vs Terminals &middot; Berthings by installation &middot; ANTAQ 2010-2025</div>
+          <div class="sub">Public Ports vs Terminals &middot; Berthings by installation &middot; ANTAQ 2010-2025 &middot; data to Feb 2026</div>
           <div class="desc">Berthings at Brazil&rsquo;s 34 public ports and 213 private-use terminals (TUP), by individual installation and year. Two tabs, a year selector back to 2010, annual trends, top-20 rankings and a full installation table.</div>
           <div class="chips">
             <div class="chip">
@@ -655,12 +761,12 @@
       </div>
     </div>
 
-    <!-- ═══ 11 · BRAZIL PORT CALL MONITOR (full width) ═══ -->
+    <!-- ═══ 12 · BRAZIL PORT CALL MONITOR (full width) ═══ -->
     <div class="sc" style="grid-column: 1 / -1;">
       <div class="cb" style="background: linear-gradient(160deg, #1f6f8b 0%, #0B2239 92%)">
         <div class="cf tl"></div><div class="cf tr"></div><div class="cf bl"></div><div class="cf br"></div>
-        <div class="rkb">11</div>
-        <div class="idp">PCMN-011</div>
+        <div class="rkb">12</div>
+        <div class="idp">PCMN-012</div>
         <div class="ci">
           <span class="pill" style="align-self: flex-start; width: fit-content; background: rgba(15,181,186,0.20); border-color: rgba(127,227,230,0.55); color: #b8f0f2;">New &middot; Latest release</span>
           <h3>Brazil Port Call Monitor</h3>
