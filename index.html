@@ -276,6 +276,40 @@
   .about a { color: var(--teal-dk); text-decoration: none; font-weight: 500; }
   .about a:hover { text-decoration: underline; }
 
+
+  /* ═══ NEWSLETTER ═══ */
+  .nl-strip { padding: 0 0 30px; }
+  .nl-strip-in {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--teal);
+    border-radius: 12px; padding: 14px 18px;
+  }
+  .nl-strip-txt { flex: 1; min-width: 240px; font-size: 0.92rem; color: var(--muted); line-height: 1.5; }
+  .nl-strip-txt strong { color: var(--deep); font-family: 'Sora'; font-weight: 700; }
+  .nl-btn {
+    display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+    padding: 10px 18px; border-radius: 8px; background: var(--deep); color: #fff;
+    font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: all 0.2s;
+  }
+  .nl-btn:hover { background: var(--teal-dk); transform: translateY(-1px); }
+  .nl-btn svg { width: 16px; height: 16px; }
+  .newsletter { padding: 56px 0; border-top: 1px solid var(--line); }
+  .nl-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-bottom: 22px; }
+  .nl-head h2 { font-family: 'Sora'; font-size: 1.6rem; font-weight: 700; color: var(--deep); margin-bottom: 8px; }
+  .nl-head p { color: var(--muted); line-height: 1.65; max-width: 640px; }
+  .nl-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .nl-card {
+    display: flex; flex-direction: column; gap: 8px; background: #fff; border: 1px solid var(--line);
+    border-top: 3px solid var(--deep2); border-radius: 12px; padding: 18px; text-decoration: none; color: var(--ink);
+    transition: all 0.2s;
+  }
+  .nl-card:hover { border-top-color: var(--teal); transform: translateY(-2px); box-shadow: 0 8px 22px rgba(11,34,57,0.08); }
+  .nl-ed { font-family: 'DM Mono'; font-size: 0.7rem; letter-spacing: 1px; text-transform: uppercase; color: var(--teal-dk); }
+  .nl-card h3 { font-family: 'Sora'; font-size: 1rem; font-weight: 700; color: var(--deep); line-height: 1.35; }
+  .nl-card span.more { margin-top: auto; font-size: 0.8rem; color: var(--muted); }
+  .nl-topics { margin-top: 18px; font-size: 0.8rem; color: #8aa0ab; }
+  @media (max-width: 980px) { .nl-grid { grid-template-columns: 1fr; } }
+
   /* ═══ FOOTER ═══ */
   footer { background: var(--deep); color: rgba(255,255,255,0.55); text-align: center; padding: 30px; font-size: 0.85rem; }
   footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
@@ -327,6 +361,7 @@
     </div>
     <nav class="hdr-nav">
       <a href="#yard">Projects</a>
+      <a href="#newsletter">Newsletter</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -377,6 +412,13 @@
     &nbsp;&nbsp;|&nbsp;&nbsp; Cargo 2025: iron ore 33% &middot; fuels 24% &middot; containers 12% &middot; soybeans 10%
   </div>
   <div class="glance-note">Source: ANTAQ, Estat&iacute;stico Aquavi&aacute;rio (authorised cargo operations; complexes group all installations of a port area). Data to February 2026, extracted 24 September 2026. Figures are aggregated by Brazil Port Data.</div>
+</section>
+
+<section class="wrap nl-strip" aria-label="Newsletter">
+  <div class="nl-strip-in">
+    <div class="nl-strip-txt"><strong>Port Decarbonisation Data</strong> &middot; a weekly LinkedIn newsletter. One open dataset, one question about European ports, with charts and method.</div>
+    <a class="nl-btn" href="https://www.linkedin.com/newsletters/port-decarbonisation-data-7513899582771294208/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Subscribe on LinkedIn</a>
+  </div>
 </section>
 
 <section class="wrap yard" id="yard">
@@ -822,6 +864,37 @@
   </div>
 </section>
 
+<!-- ═══ NEWSLETTER ═══ -->
+<section class="wrap newsletter" id="newsletter">
+  <div class="slbl">Newsletter &middot; Weekly on LinkedIn</div>
+  <div class="nl-head">
+    <div>
+      <h2>Port Decarbonisation Data</h2>
+      <p>Every week, one open dataset and one question about European ports: shore power, EU ETS and FuelEU Maritime, ship emissions, satellites and port statistics. Charts, numbers with sources and the method behind them.</p>
+    </div>
+    <a class="nl-btn" href="https://www.linkedin.com/newsletters/port-decarbonisation-data-7513899582771294208/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>Subscribe on LinkedIn</a>
+  </div>
+  <div class="slbl" style="margin-bottom: 14px;">Latest editions</div>
+  <div class="nl-grid">
+    <a class="nl-card" href="https://www.linkedin.com/pulse/shore-power-gap-where-ships-emit-berth-2030-still-darliane-cunha-phd-mkjve/" target="_blank" rel="noopener">
+      <div class="nl-ed">Edition 9</div>
+      <h3>The Shore Power Gap: where ships emit at berth, and where the 2030 connections are still missing</h3>
+      <span class="more">Read on LinkedIn &rarr;</span>
+    </a>
+    <a class="nl-card" href="https://www.linkedin.com/pulse/words-decarbonisation-seven-terms-shape-port-shipping-cunha-phd-luhif/" target="_blank" rel="noopener">
+      <div class="nl-ed">Edition 8</div>
+      <h3>The Words of Decarbonisation: seven terms that shape port and shipping climate policy</h3>
+      <span class="more">Read on LinkedIn &rarr;</span>
+    </a>
+    <a class="nl-card" href="https://www.linkedin.com/pulse/hydrogen-quay-what-global-compass-2026-means-europes-ports-darliane-mzgpf/" target="_blank" rel="noopener">
+      <div class="nl-ed">Edition 7</div>
+      <h3>Hydrogen at the Quay: what the Global Hydrogen Compass 2026 means for Europe&rsquo;s ports</h3>
+      <span class="more">Read on LinkedIn &rarr;</span>
+    </a>
+  </div>
+  <div class="nl-topics">Built on the same open data as this platform: EU MRV (EMSA), Eurostat, Copernicus Sentinel-5P, ANTAQ and national port-call registers.</div>
+</section>
+
 <!-- ═══ ABOUT ═══ -->
 <section class="wrap about" id="about">
   <h2>About</h2>
@@ -849,6 +922,10 @@
       <a href="mailto:darliane@brazilportdata.com" style="color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.45);">darliane@brazilportdata.com</a>
     </p>
     <div class="contact-btns">
+      <a href="https://www.linkedin.com/newsletters/port-decarbonisation-data-7513899582771294208/" target="_blank" rel="noopener" class="contact-btn primary">
+        <svg class="contact-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+        Subscribe to the Newsletter
+      </a>
       <a href="https://ribeirocunha.com" target="_blank" rel="noopener" class="contact-btn secondary">
         <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
         Visit Research Profile
@@ -859,7 +936,8 @@
 
 <footer>
   &copy; 2026 Brazil Port Data &middot; All rights reserved &middot;
-  <a href="https://ribeirocunha.com" target="_blank" rel="noopener">Darliane Cunha, PhD</a>
+  <a href="https://ribeirocunha.com" target="_blank" rel="noopener">Darliane Cunha, PhD</a> &middot;
+  <a href="https://www.linkedin.com/newsletters/port-decarbonisation-data-7513899582771294208/" target="_blank" rel="noopener">Newsletter: Port Decarbonisation Data</a>
 </footer>
 
 </body>
