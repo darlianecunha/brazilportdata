@@ -6,7 +6,7 @@ Source of [brazilportdata.com](https://www.brazilportdata.com): a research hub o
 
 | Path | Content |
 |---|---|
-| `index.html` | The home page: twelve project cards, the *Brazil at a Glance* strip and the About and Contact sections. Static HTML, no build step. |
+| `index.html` | The home page: eleven project cards, the *Brazil at a Glance* strip and the About and Contact sections. Static HTML, no build step. |
 | `CNAME`, `favicon.svg`, `og-image.png` | Domain and site assets. |
 
 The dashboards linked from the home page live in their own repositories and Vercel projects (PortFlow Brasil, Ports & Terminals Explorer, Brazilian Berthings, Brazil Port Call Monitor, OPS Priority Atlas, SDG Port Hub, European Maritime Observatory and others).
