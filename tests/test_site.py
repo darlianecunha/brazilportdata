@@ -286,11 +286,6 @@ class TestGlanceFigures(Base):
         self.assertRegex(note, r"Data to \w+ \d{4}")
         self.assertRegex(note, r"extracted \d{1,2} \w+ \d{4}")
 
-    # Known issue (Nov 2026): the meta description says "ANTAQ 2010-2025" while
-    # the source note says "Data to February 2026". Remove this decorator once
-    # the description is updated, or delete the test if 2025 (last full year)
-    # is the intended wording.
-    @unittest.expectedFailure
     def test_meta_description_period_matches_source_note(self):
         """The SEO description must not advertise an older range than the data."""
         note = text_of(re.search(r'class="glance-note">(.*?)</div>', self.glance, re.S).group(1))
