@@ -92,7 +92,7 @@ class TestStructuredData(Base):
         self.assertEqual(len(self.page.jsonld), 1)
         data = json.loads(self.page.jsonld[0])
         types = {node["@type"] for node in data["@graph"]}
-        self.assertEqual(types, {"WebSite", "Person", "Organization"})
+        self.assertEqual(types, {"WebSite", "Person", "Organization", "Dataset"})
 
     def test_jsonld_references_resolve(self):
         data = json.loads(self.page.jsonld[0])
@@ -101,6 +101,14 @@ class TestStructuredData(Base):
             for value in node.values():
                 if isinstance(value, dict) and "@id" in value:
                     self.assertIn(value["@id"], ids)
+
+    def test_dataset_points_to_zenodo_doi_with_licence(self):
+        data = json.loads(self.page.jsonld[0])
+        ds = next(n for n in data["@graph"] if n["@type"] == "Dataset")
+        self.assertTrue(ds["identifier"].startswith("https://doi.org/10.5281/zenodo."))
+        self.assertIn(ds["identifier"], self.html.replace("doi:", "https://doi.org/"))
+        self.assertIn("odbl", ds["license"].lower())
+        self.assertGreaterEqual(len(ds["description"]), 50)
 
     def test_jsonld_urls_match_canonical(self):
         data = json.loads(self.page.jsonld[0])
